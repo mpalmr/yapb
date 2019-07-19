@@ -1,39 +1,55 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik } from 'formik';
 import axios from 'axios';
 
 
-export default function Pastebin() {
-  const [contents, setContents] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const formConfig = {
+  initialValues: { contents: '' },
 
+  validate(values) {
+    const errors = {};
+    if (!values.contents) errors.contents = 'Required';
+    return errors;
+  },
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setIsSubmitting(true);
-
+  async onSubmit(values) {
     return axios
-      .post('/', { contents })
+      .post('/', values)
       .then((res) => {
         console.log(res);
         return res;
-      })
-      .finally(() => {
-        setIsSubmitting(false);
       });
-  }
+  },
+};
 
 
+export default function Pastebin() {
   return (
-    <form method="post" action="/" onSubmit={handleSubmit}>
-      <input
-        name="contents"
-        value={contents}
-        disabled={isSubmitting}
-        onChange={event => setContents(event.target.value)}
-      />
-      <button type="submit" disabled={isSubmitting}>
-        Submit
-      </button>
-    </form>
+    <Formik {...formConfig}>
+      {({
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+      }) => (
+        <form method="post" action="/" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="contents"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
+          />
+          {errors.email && touched.email ? errors.email : null}
+
+          <button type="submit" disabled={isSubmitting || !values.contents}>
+            Submit
+          </button>
+        </form>
+      )}
+    </Formik>
   );
 }

@@ -8,7 +8,8 @@ module.exports = {
       files: ['server/**/*.js'],
       parserOptions: { sourceType: 'script' },
       rules: {
-        strict: [2, 'strict'],
+        strict: [2, 'global'],
+        'no-console': 0,
       },
     },
   ],

@@ -20,9 +20,7 @@ app
     api(server);
 
     // Default route handler
-    server.get('*', (req, res) => {
-      return handle(req, res);
-    });
+    server.get('*', (req, res) => handle(req, res));
 
     // Start HTTP server
     server.listen(process.env.PORT, (error) => {

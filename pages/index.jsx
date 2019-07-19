@@ -7,9 +7,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <main>
-        <Pastebin />
-      </main>
+      <Pastebin />
     </>
   );
 }
