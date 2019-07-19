@@ -23,6 +23,5 @@ module.exports = function loginRoute({ server, db }) {
       .catch(next);
   }
 
-
   server.post('/login', validate, login);
 };
