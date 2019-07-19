@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon server/index.js --inspect -w server",
     "db:migrate": "knex migrate:latest",
-    "test": "jest server/**/__tests__/*.spec.js"
+    "test": "jest"
   },
   "author": "Matthe Palmer <mspalmer91@gmail.com>",
   "license": "MIT",
@@ -24,6 +24,8 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^5.3.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-plugin-import": "^2.18.1",

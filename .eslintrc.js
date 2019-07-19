@@ -12,6 +12,7 @@ module.exports = {
         'server/**/*.js',
         'migrations/**/*.js',
         'knexfile.js',
+        'jest.config.js',
       ],
       parserOptions: { sourceType: 'script' },
       rules: {
@@ -19,7 +20,7 @@ module.exports = {
       },
     },
     {
-      files: ['*.spec.js'],
+      files: ['*.spec.js', '*.spec.jsx'],
       env: { jest: true },
     },
   ],
