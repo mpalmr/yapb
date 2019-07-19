@@ -6,6 +6,7 @@ const next = require('next');
 const knex = require('knex');
 const knexConfig = require('../knexfile');
 const api = require('./api');
+const errorMiddleware = require('./middleware/error');
 
 
 // Initialize Next.js
@@ -25,6 +26,7 @@ app
 
     // Default route handler
     server.get('*', handle);
+    server.use(errorMiddleware);
 
     // Start HTTP server
     server.listen(process.env.PORT, (error) => {
