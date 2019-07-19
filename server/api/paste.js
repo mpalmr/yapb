@@ -1,19 +1,12 @@
 'use strict';
 
+const createValidatorHandler = require('../middleware/create-validator-middleware');
 const validator = require('../../validation/paste');
+
+const validate = createValidatorHandler(validator);
 
 
 module.exports = function pasteRoute({ server, db }) {
-  function validate(req, res, next) {
-    const errors = validator(req.body);
-    if (Object.keys(errors).length) {
-      res
-        .status(400)
-        .json({ errors });
-    } else next();
-  }
-
-
   async function createPaste(req, res, next) {
     return db('pastes')
       .insert(req.body)
