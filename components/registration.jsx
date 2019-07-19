@@ -18,7 +18,7 @@ const formConfig = {
 
     if (!values.password) errors.password = 'Required';
     else if (values.password.length < 6) {
-      errors.password = 'Password must be at least six characters.';
+      errors.password = 'Password must be at least six characters';
     }
 
     return errors;
