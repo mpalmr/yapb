@@ -1,20 +1,13 @@
 'use strict';
 
 const argon2 = require('argon2');
+const createValidatorHandler = require('../middleware/create-validator-middleware');
 const validator = require('../../validation/registration');
+
+const validate = createValidatorHandler(validator);
 
 
 module.exports = function registerRoute({ server, db }) {
-  function validate(req, res, next) {
-    const errors = validator(req.body);
-    if (Object.keys(errors).length) {
-      res
-        .status(400)
-        .json({ errors });
-    } else next();
-  }
-
-
   async function createUser(req, res, next) {
     return argon2
       .hash(req.body.password)
