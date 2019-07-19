@@ -3,26 +3,36 @@
 const errorMiddleware = require('../error');
 
 
+const error = new Error('mock error');
+const next = jest.fn();
+const json = jest.fn();
+const status = jest.fn();
+
 beforeEach(() => {
   console.error = jest.fn();
+  status.mockReturnValue({ json });
+});
+
+afterEach(() => {
+  next.mockReset();
+  json.mockReset();
+  status.mockReset();
 });
 
 
-test('Calls next with the error as a parameter only if res.headersSent is truthy', () => {
-  const mockNext = jest.fn();
+test('Call next if res.headersSent is truthy', () => {
+  const res = { status, headersSent: true };
+  errorMiddleware(error, {}, res, next);
+  expect(status).not.toBeCalled();
+  expect(json).not.toBeCalled();
+  expect(next).toHaveBeenCalledWith(error);
+});
 
-  errorMiddleware(
-    new Error('mock error'),
-    {},
-    {
-      headersSent: false,
-      status: () => ({ json: jest.fn() }),
-    },
-    mockNext,
-  );
-  expect(mockNext).not.toBeCalled();
 
-  const mockError = new Error('mock error');
-  errorMiddleware(mockError, {}, { headersSent: true }, mockNext);
-  expect(mockNext).toHaveBeenCalledWith(mockError);
+test('Send a 500 response with the error as JSON if res.headersSent is falsey', () => {
+  const res = { status, headersSent: false };
+  errorMiddleware(error, {}, res, next);
+  expect(next).not.toBeCalled();
+  expect(status).toHaveBeenCalledWith(500);
+  expect(json).toHaveBeenCalledWith(error);
 });
