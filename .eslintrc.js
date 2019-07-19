@@ -3,6 +3,9 @@
 module.exports = {
   root: true,
   extends: 'airbnb',
+  settings: {
+    'import/core-modules': ['styled-jsx', 'styled-jsx/css'],
+  },
   rules: {
     'no-console': 0,
     'prefer-destructuring': 0,
