@@ -1,29 +1,37 @@
 import React from 'react';
 import Link from 'next/link';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 
 export default function Header() {
   return (
-    <header>
-      <Navbar bg="dark" variant="dark">
-        <h1>mpaste</h1>
+    <Navbar className="justify-content-between" as="header" bg="dark" variant="dark" justify>
+      <Navbar.Brand as="h1" componentClass="h1">mpaste</Navbar.Brand>
 
-        <nav>
-          <ul>
-            <li>
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/register">
-                <a>Register</a>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </Navbar>
-    </header>
+      <Nav>
+        <NavItem>
+          <Link href="/login">
+            <a>Login</a>
+          </Link>
+        </NavItem>
+        <NavItem>
+          <Link href="/register">
+            <a>Register</a>
+          </Link>
+        </NavItem>
+      </Nav>
+
+      <style jsx global>
+        {`
+          header .nav-item {
+            padding: .5rem;
+          }
+
+          header .nav-item:last-child {
+            padding-right: 0;
+          }
+        `}
+      </style>
+    </Navbar>
   );
 }
