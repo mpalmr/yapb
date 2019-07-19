@@ -9,7 +9,7 @@ import {
 
 
 const formConfig = {
-  initialValues: { email: '', password: '' },
+  initialValues: { email: '', password: '', githubUrl: '' },
 
   validate(values) {
     const errors = {};
@@ -45,6 +45,9 @@ export default function Register() {
 
           <Field name="password" type="password" />
           <ErrorMessage name="password" component="div" />
+
+          <Field name="githubUrl" />
+          <ErrorMessage name="githubUrl" component="div" />
 
           <button type="submit" disabled={isSubmitting}>
             Submit
