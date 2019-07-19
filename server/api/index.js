@@ -1,7 +1,8 @@
 'use strict';
 
 module.exports = function api(server) {
-  server.use('/api/foo', (req, res) => {
-    res.json({ a: 1 });
+  server.post('/', (req, res) => {
+    console.log(req.body);
+    res.send('AY');
   });
 };

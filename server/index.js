@@ -3,7 +3,7 @@
 require('dotenv').config();
 const express = require('express');
 const next = require('next');
-// const api = require('./api');
+const api = require('./api');
 
 
 const app = next({ dev: process.env.NODE_ENV !== 'production' });
@@ -13,10 +13,13 @@ app
   .prepare()
   .then(() => {
     const server = express();
+    server.use(express.json());
 
     server.get('*', (req, res) => {
       return handle(req, res);
     });
+
+    api(server);
 
     server.listen(process.env.PORT, (error) => {
       if (error) throw error;
