@@ -24,6 +24,5 @@ module.exports = function registerRoute({ server, db }) {
         .catch(next));
   }
 
-
   server.post('/register', validate, createUser);
 };

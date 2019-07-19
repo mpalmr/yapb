@@ -17,6 +17,5 @@ module.exports = function pasteRoute({ server, db }) {
       .catch(next);
   }
 
-
   server.post('/', validate, createPaste);
 };
