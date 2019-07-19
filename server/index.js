@@ -5,6 +5,7 @@ const express = require('express');
 const next = require('next');
 const api = require('./api');
 
+
 // Initialize Next.js
 const app = next({ dev: process.env.NODE_ENV !== 'production' });
 const handle = app.getRequestHandler();
@@ -20,7 +21,7 @@ app
     api(server);
 
     // Default route handler
-    server.get('*', (req, res) => handle(req, res));
+    server.get('*', handle);
 
     // Start HTTP server
     server.listen(process.env.PORT, (error) => {
