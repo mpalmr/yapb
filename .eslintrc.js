@@ -8,7 +8,11 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['server/**/*.js'],
+      files: [
+        'server/**/*.js',
+        'migrations/**/*.js',
+        'knexfile.js',
+      ],
       parserOptions: { sourceType: 'script' },
       rules: {
         strict: [2, 'global'],
