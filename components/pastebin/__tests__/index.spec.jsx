@@ -20,6 +20,9 @@ describe('Validation', () => {
     expect(validate({ ...initialValues }).contents)
       .toEqual('Required');
 
+    expect(validate({ ...initialValues, contents: '   ' }).contents)
+      .toEqual('Required');
+
     expect(validate({ ...initialValues, contents: 'a' }).contents)
       .toBeUndefined();
   });

@@ -13,7 +13,7 @@ const formConfig = {
 
   validate(values) {
     const errors = {};
-    if (!values.contents) errors.contents = 'Required';
+    if (!values.contents.trim()) errors.contents = 'Required';
     return errors;
   },
 
