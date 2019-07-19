@@ -6,6 +6,7 @@ export default function Header() {
   return (
     <header>
       <h1>mpaste</h1>
+      <Link href="/login">Login</Link>
       <Link href="/register">Register</Link>
 
       <style jsx>
