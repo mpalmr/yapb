@@ -1,7 +1,10 @@
 'use strict';
 
 exports.up = async function up(knex) {
+  // Allows for DB generated UUIDs
   return knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
+
+    // Create pastes table
     .then(() => knex.schema.createTable('pastes', (table) => {
       table
         .increments('id')

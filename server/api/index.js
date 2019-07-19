@@ -10,4 +10,15 @@ module.exports = function api({ server, db }) {
       })
       .catch(next);
   });
+
+
+  server.post('/register', (req, res, next) => {
+    db('users')
+      .insert(req.body)
+      .then((result) => {
+        console.log(result);
+        res.json(result);
+      })
+      .catch(next);
+  });
 };
