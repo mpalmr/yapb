@@ -6,23 +6,12 @@ import {
   Field,
   ErrorMessage,
 } from 'formik';
+import validation from '../validation/registration';
 
 
 const formConfig = {
+  validation,
   initialValues: { email: '', password: '', githubUrl: '' },
-
-  validate(values) {
-    const errors = {};
-
-    if (!values.email) errors.email = 'Required';
-
-    if (!values.password) errors.password = 'Required';
-    else if (values.password.length < 6) {
-      errors.password = 'Password must be at least six characters';
-    }
-
-    return errors;
-  },
 
   async onSubmit(values) {
     return axios

@@ -1,19 +1,12 @@
 'use strict';
 
 const argon2 = require('argon2');
+const validator = require('../../validation/registration');
 
 
 module.exports = function registerRoute({ server, db }) {
   function validate(req, res, next) {
-    const errors = {};
-
-    if (!req.body.email) errors.email = 'Required';
-
-    if (!req.body.password) errors.password = 'Required';
-    else if (req.body.password.length < 6) {
-      errors.password = 'Password must be at least six characters';
-    }
-
+    const errors = validator(req.body);
     if (Object.keys(errors).length) {
       res
         .status(400)
