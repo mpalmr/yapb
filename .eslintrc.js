@@ -11,6 +11,7 @@ module.exports = {
     {
       files: [
         'server/**/*.js',
+        'validation/**/*.js',
         'migrations/**/*.js',
         'knexfile.js',
         'jest.config.js',

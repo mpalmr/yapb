@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon server/index.js --inspect -w server",
     "db:migrate": "knex migrate:latest",
+    "prepare": "docker-compose up && npm run db:migrate",
     "test": "jest"
   },
   "author": "Matthe Palmer <mspalmer91@gmail.com>",

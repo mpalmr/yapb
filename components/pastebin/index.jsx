@@ -6,16 +6,12 @@ import {
   Field,
   ErrorMessage,
 } from 'formik';
+import validate from '../../validation/paste';
 
 
 const formConfig = {
+  validate,
   initialValues: { contents: '' },
-
-  validate(values) {
-    const errors = {};
-    if (!values.contents) errors.contents = 'Required';
-    return errors;
-  },
 
   async onSubmit(values) {
     return axios

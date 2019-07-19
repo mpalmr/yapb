@@ -30,8 +30,7 @@ exports.up = async function up(knex) {
     .then(() => knex.schema.alterTable('pastes', (table) => {
       table
         .integer('user_id')
-        .unsigned()
-        .notNullable();
+        .unsigned();
 
       table
         .foreign('user_id')
