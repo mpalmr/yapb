@@ -10,5 +10,9 @@ module.exports = function validateRegistration(values) {
     errors.password = 'Password must be at least six characters';
   }
 
+  if (values.githubUrl && !/((https?:)?\/\/)?(www\.)?github\.com\/.+/i.test(values.githubUrl)) {
+    errors.githubUrl = 'URL must be for for github.com';
+  }
+
   return errors;
 };

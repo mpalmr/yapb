@@ -3,22 +3,41 @@
 const validate = require('../registration');
 
 
-let initialValues;
+let vals;
 beforeEach(() => {
-  initialValues = { email: '', password: '' };
+  vals = { email: '', password: '' };
 });
 
 
 test('Email', () => {
-  expect(validate({ ...initialValues }).email).toEqual('Required');
-  expect(validate({ ...initialValues, email: '  ' }).email).toEqual('Required');
-  expect(validate({ ...initialValues, email: 'hacker@evil.org' }).email).toBeUndefined();
+  expect(validate({ ...vals }).email).toEqual('Required');
+  expect(validate({ ...vals, email: '  ' }).email).toEqual('Required');
+  expect(validate({ ...vals, email: 'hacker@evil.org' }).email).toBeUndefined();
 });
 
 
 test('Password', () => {
-  expect(validate({ ...initialValues }).password).toEqual('Required');
-  expect(validate({ ...initialValues, password: 'abc' }).password)
+  expect(validate({ ...vals }).password).toEqual('Required');
+  expect(validate({ ...vals, password: 'abc' }).password)
     .toEqual('Password must be at least six characters');
-  expect(validate({ ...initialValues, password: 'P@ssw0rd' }).password).toBeUndefined();
+  expect(validate({ ...vals, password: 'P@ssw0rd' }).password).toBeUndefined();
+});
+
+
+test('GitHub URL', () => {
+  expect(validate({ ...vals }).githubUrl).toBeUndefined();
+
+  const errMsg = 'URL must be for for github.com';
+  expect(validate({ ...vals, githubUrl: 'google.ca/coolcat' }).githubUrl).toEqual(errMsg);
+  expect(validate({ ...vals, githubUrl: 'github/coolcat' }).githubUrl).toEqual(errMsg);
+  expect(validate({ ...vals, githubUrl: '/coolcat' }).githubUrl).toEqual(errMsg);
+  expect(validate({ ...vals, githubUrl: 'github.com' }).githubUrl).toEqual(errMsg);
+
+  expect(validate({ ...vals, githubUrl: 'github.com/a' }).githubUrl).toBeUndefined();
+  expect(validate({ ...vals, githubUrl: 'www.github.com/a' }).githubUrl).toBeUndefined();
+  expect(validate({ ...vals, githubUrl: 'https://www.github.com/a' }).githubUrl).toBeUndefined();
+  expect(validate({ ...vals, githubUrl: 'http://www.github.com/a' }).githubUrl).toBeUndefined();
+  expect(validate({ ...vals, githubUrl: 'https://github.com/a' }).githubUrl).toBeUndefined();
+
+  expect(validate({ ...vals, githubUrl: 'https://github.com/mpalmr' }).githubUrl).toBeUndefined();
 });
