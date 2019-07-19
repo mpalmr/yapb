@@ -1,6 +1,11 @@
 import React from 'react';
-import { Formik } from 'formik';
 import axios from 'axios';
+import {
+  Formik,
+  Form,
+  Field,
+  ErrorMessage,
+} from 'formik';
 
 
 const formConfig = {
@@ -26,29 +31,14 @@ const formConfig = {
 export default function Pastebin() {
   return (
     <Formik {...formConfig}>
-      {({
-        values,
-        errors,
-        touched,
-        isSubmitting,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-      }) => (
-        <form method="post" action="/" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="contents"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-          />
-          {errors.email && touched.email ? errors.email : null}
-
-          <button type="submit" disabled={isSubmitting || !values.contents}>
+      {({ isSubmitting }) => (
+        <Form method="post" action="/">
+          <Field name="contents" />
+          <ErrorMessage name="contents" component="div" />
+          <button type="submit" disabled={isSubmitting}>
             Submit
           </button>
-        </form>
+        </Form>
       )}
     </Formik>
   );
