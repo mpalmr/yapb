@@ -18,5 +18,9 @@ module.exports = {
         strict: [2, 'global'],
       },
     },
+    {
+      files: ['*.spec.js'],
+      env: { jest: true },
+    },
   ],
 };
