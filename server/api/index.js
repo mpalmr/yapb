@@ -1,11 +1,7 @@
 'use strict';
 
-const { Router } = require('express');
-
-const router = Router();
-
-
-
-
-
-module.exports = router;
+module.exports = function api(server) {
+  server.use('/api/foo', (req, res) => {
+    res.json({ a: 1 });
+  });
+};

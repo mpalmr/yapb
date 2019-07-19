@@ -5,14 +5,13 @@
   "description": "A pastebin",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
-    "start": "next start",
-    "build": "next build",
+    "dev": "NODE_ENV=development nodemon server/index.js --inspect -w server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Matthe Palmer <mspalmer91@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "next": "^9.0.2",
     "react": "^16.8.6",
@@ -23,6 +22,7 @@
     "eslint-config-airbnb": "^17.1.1",
     "eslint-plugin-import": "^2.18.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.2"
+    "eslint-plugin-react": "^7.14.2",
+    "nodemon": "^1.19.1"
   }
 }
