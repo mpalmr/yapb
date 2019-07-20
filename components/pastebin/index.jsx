@@ -6,7 +6,7 @@ import File from './file';
 
 
 export default function Pastebin() {
-  const { files, addFile, createFileHandlers } = useFiles();
+  const { files, addFile } = useFiles();
 
 
   async function handleSubmit(event) {
@@ -25,16 +25,15 @@ export default function Pastebin() {
   return (
     <Container>
       <Form method="post" action="/" onSubmit={handleSubmit} noValidate>
-        {files.map(({ id, ...file }, i) => (
+        {files.map(({ id, ...file }) => (
           <File
             key={id}
             {...file}
-            {...createFileHandlers(i)}
             canRemove={files.length > 1}
           />
         ))}
 
-        <Button className="add-file" onClick={addFile}>Add File</Button>
+        <Button onClick={addFile}>Add File</Button>
         <Button type="submit">Paste</Button>
       </Form>
     </Container>
