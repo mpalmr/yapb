@@ -1,6 +1,21 @@
 'use strict';
 
-// const createValidatorHandler = require('../middleware/create-validator-middleware');
+const { paste: schema } = require('../../validation-schemas');
+
+
+async function validate(req, res, next) {
+  return schema
+    .validate(req.body)
+    .then((value) => {
+      next();
+      return value;
+    })
+    .catch((errors) => {
+      res
+        .status(400)
+        .json({ errors });
+    });
+}
 
 
 module.exports = function pasteRoute({ server, db }) {
@@ -14,5 +29,5 @@ module.exports = function pasteRoute({ server, db }) {
       .catch(next);
   }
 
-  server.post('/', createPaste);
+  server.post('/', validate, createPaste);
 };

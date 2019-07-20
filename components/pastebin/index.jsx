@@ -1,16 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-} from 'formik';
-import validate from '../../validation/paste';
+import { Formik } from 'formik';
+import { Container, Form, Button } from 'react-bootstrap';
+import { paste as validationSchema } from '../../validation-schemas';
 
 
 const formConfig = {
-  validate,
+  validationSchema,
   initialValues: { contents: '' },
 
   async onSubmit(values) {
@@ -26,16 +22,34 @@ const formConfig = {
 
 export default function Pastebin() {
   return (
-    <Formik {...formConfig}>
-      {({ isSubmitting }) => (
-        <Form method="post" action="/">
-          <Field name="contents" />
-          <ErrorMessage name="contents" component="div" />
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-        </Form>
-      )}
-    </Formik>
+    <Container>
+      <Formik {...formConfig}>
+        {({
+          values,
+          errors,
+          touched,
+          isSubmitting,
+          handleChange,
+          handleSubmit,
+        }) => (
+          <Form method="post" action="/" onSubmit={handleSubmit} noValidate>
+
+            <Form.Group controlId="contents">
+              <Form.Control
+                type="text"
+                name="contents"
+                value={values.contents}
+                disabled={isSubmitting}
+                isValid={touched.contents && !errors.contents}
+                isInvalid={errors.contents}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Button type="submit">Paste</Button>
+          </Form>
+        )}
+      </Formik>
+    </Container>
   );
 }

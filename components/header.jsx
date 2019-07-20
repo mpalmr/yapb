@@ -6,7 +6,11 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 export default function Header() {
   return (
     <Navbar className="justify-content-between" as="header" bg="dark" variant="dark">
-      <Navbar.Brand as="h1">mpaste</Navbar.Brand>
+      <Link href="/">
+        <a>
+          <Navbar.Brand as="h1">mpaste</Navbar.Brand>
+        </a>
+      </Link>
 
       <Nav>
         <NavItem>
