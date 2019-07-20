@@ -12,6 +12,8 @@ function UserProvider({ children, ...props }) {
 
 
   async function login(loginEmail, password) {
+    if (email) throw new Error('User is already logged in.');
+
     return client
       .post('/login', { password, email: loginEmail })
       .then((res) => {
@@ -27,6 +29,7 @@ function UserProvider({ children, ...props }) {
     if (!email) throw new Error('User is not logged in.');
     setEmail(null);
     localStorage.clear();
+
     return client
       .post('/logout')
       .then((res) => {
@@ -36,16 +39,15 @@ function UserProvider({ children, ...props }) {
   }
 
 
-  const value = {
-    email,
-    login,
-    logout,
-    isLoggedIn: !!email,
-  };
-
-
   return (
-    <UserContext.Provider value={value}>
+    <UserContext.Provider
+      value={{
+        email,
+        login,
+        logout,
+        isLoggedIn: !!email,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

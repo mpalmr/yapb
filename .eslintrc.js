@@ -42,7 +42,10 @@ module.exports = {
     },
     {
       files: ['*.spec.js', '*.spec.jsx'],
-      env: { jest: true },
+      env: { jest: true, browser: true },
+      rules: {
+        'import/first': 0,
+      },
     },
     {
       files: [
