@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 
-function Header({ userEmail }) {
+function Header() {
   return (
     <Navbar className="justify-content-between" as="header" bg="dark" variant="dark">
       <Link href="/">
@@ -14,7 +13,7 @@ function Header({ userEmail }) {
       </Link>
 
       <Nav>
-        {userEmail ? (
+        {false ? (
           <>
             <NavItem>
               <Link href="/">
@@ -57,15 +56,6 @@ function Header({ userEmail }) {
     </Navbar>
   );
 }
-
-
-Header.propTypes = {
-  userEmail: PropTypes.string,
-};
-
-Header.defaultProps = {
-  userEmail: null,
-};
 
 
 export default Header;

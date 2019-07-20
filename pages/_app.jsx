@@ -2,7 +2,7 @@ import React from 'react';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UserContext from '../components/user-context';
+import UserProvider from '../components/user-provider';
 import Header from '../components/header';
 
 
@@ -18,14 +18,6 @@ export default class AppContainer extends App {
     };
   }
 
-  // All user values
-  state = { email: null };
-
-  componentDidMount() {
-    const email = localStorage.getItem('email');
-    if (email) this.setState({ email });
-  }
-
   render() {
     const { Component, userEmail, pageProps } = this.props;
 
@@ -34,10 +26,10 @@ export default class AppContainer extends App {
         <Head>
           <title>mpaste</title>
         </Head>
-        <UserContext.Provider value={this.state}>
-          <Header userEmail={userEmail} />
+        <UserProvider email={userEmail}>
+          <Header />
           <Component {...pageProps} />
-        </UserContext.Provider>
+        </UserProvider>
       </Container>
     );
   }
