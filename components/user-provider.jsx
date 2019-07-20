@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 import client from '../client';
 
 
@@ -16,6 +17,7 @@ function UserProvider({ children, ...props }) {
       .then((res) => {
         setEmail(loginEmail);
         localStorage.setItem('userEmail', loginEmail);
+        Router.push('/');
         return res;
       });
   }
@@ -25,7 +27,12 @@ function UserProvider({ children, ...props }) {
     if (!email) throw new Error('User is not logged in.');
     setEmail(null);
     localStorage.clear();
-    return client.post('/logout');
+    return client
+      .post('/logout')
+      .then((res) => {
+        Router.push('/');
+        return res;
+      });
   }
 
 
