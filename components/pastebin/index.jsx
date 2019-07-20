@@ -1,55 +1,37 @@
 import React from 'react';
-import { Formik } from 'formik';
 import { Container, Form, Button } from 'react-bootstrap';
 import client from '../../client';
-import { paste as validationSchema } from '../../validation-schemas';
+import useFiles from './use-files';
+import File from './file';
 
 
-const formConfig = {
-  validationSchema,
-  initialValues: { contents: '' },
+export default function Pastebin() {
+  const { files, addFile, removeFile } = useFiles();
 
-  async onSubmit(values) {
+
+  async function handleSubmit(values) {
     return client
       .post('/', values)
       .then((res) => {
         console.log(res);
         return res;
       });
-  },
-};
+  }
 
 
-export default function Pastebin() {
   return (
     <Container>
-      <Formik {...formConfig}>
-        {({
-          values,
-          errors,
-          touched,
-          isSubmitting,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <Form method="post" action="/" onSubmit={handleSubmit} noValidate>
+      <Form method="post" action="/" onSubmit={handleSubmit} noValidate>
+        {files.map((file, i) => (
+          <File
+            {...file}
+            remove={() => removeFile(i)}
+          />
+        ))}
 
-            <Form.Group controlId="contents">
-              <Form.Control
-                type="text"
-                name="contents"
-                value={values.contents}
-                disabled={isSubmitting}
-                isValid={touched.contents && !errors.contents}
-                isInvalid={errors.contents}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Button type="submit">Paste</Button>
-          </Form>
-        )}
-      </Formik>
+        <Button onClick={addFile}>Add File</Button>
+        <Button type="submit">Paste</Button>
+      </Form>
     </Container>
   );
 }
