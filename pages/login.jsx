@@ -1,18 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import * as yup from 'yup';
+import { Formik } from 'formik';
 import {
-  Formik,
+  Container,
   Form,
-  Field,
-  ErrorMessage,
-} from 'formik';
-import { Container } from 'react-bootstrap';
-import validation from '../validation/login';
+  Button,
+  Col,
+} from 'react-bootstrap';
 
 
 const formConfig = {
-  validation,
   initialValues: { email: '', password: '' },
+
+  validationSchema: yup.object().shape({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(6),
+  }),
 
   async onSubmit(values) {
     return axios
@@ -30,17 +34,53 @@ export default function LoginPage() {
     <Container>
       <h2>Login</h2>
       <Formik {...formConfig}>
-        {({ isSubmitting }) => (
-          <Form method="post" action="/login">
-            <Field name="email" type="email" />
-            <ErrorMessage name="email" component="div" />
+        {({
+          values,
+          errors,
+          touched,
+          isSubmitting,
+          handleChange,
+          handleSubmit,
+        }) => (
+          <Form method="post" action="/login" onSubmit={handleSubmit} noValidate>
+            <Form.Row>
 
-            <Field name="password" type="password" />
-            <ErrorMessage name="password" component="div" />
+              <Form.Group as={Col} md="6" controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={values.email}
+                  disabled={isSubmitting}
+                  isValid={touched.email && !errors.email}
+                  isInvalid={errors.email}
+                  onChange={handleChange}
+                />
+                {errors.email && (
+                  <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                )}
+              </Form.Group>
 
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+              <Form.Group as={Col} md="6" controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  value={values.password}
+                  disabled={isSubmitting}
+                  isValid={touched.password && !errors.password}
+                  isInvalid={errors.password}
+                  onChange={handleChange}
+                />
+                {errors.email && (
+                  <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                )}
+              </Form.Group>
+
+            </Form.Row>
+
+            <Button type="submit">Login</Button>
+
           </Form>
         )}
       </Formik>
