@@ -2,7 +2,8 @@ import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import client from '../client';
 
-const UserContext = createContext();
+
+export const UserContext = createContext();
 
 
 function UserProvider({ children, ...props }) {
@@ -28,8 +29,16 @@ function UserProvider({ children, ...props }) {
   }
 
 
+  const value = {
+    email,
+    login,
+    logout,
+    isLoggedIn: !!email,
+  };
+
+
   return (
-    <UserContext.Provider value={{ email, login, logout }}>
+    <UserContext.Provider value={value}>
       {children}
     </UserContext.Provider>
   );

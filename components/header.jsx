@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { UserContext } from './user-provider';
 
 
 function Header() {
+  const { isLoggedIn } = useContext(UserContext);
+
   return (
     <Navbar className="justify-content-between" as="header" bg="dark" variant="dark">
       <Link href="/">
@@ -13,7 +16,7 @@ function Header() {
       </Link>
 
       <Nav>
-        {false ? (
+        {isLoggedIn ? (
           <>
             <NavItem>
               <Link href="/">
