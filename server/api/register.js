@@ -1,10 +1,22 @@
 'use strict';
 
 const argon2 = require('argon2');
-const createValidatorHandler = require('../middleware/create-validator-middleware');
-const validator = require('../../validation/registration');
+const { register: schema } = require('../../validation-schemas');
 
-const validate = createValidatorHandler(validator);
+
+async function validate(req, res, next) {
+  return schema
+    .validate(req.body)
+    .then((value) => {
+      next();
+      return value;
+    })
+    .catch((errors) => {
+      res
+        .status(400)
+        .json({ errors });
+    });
+}
 
 
 module.exports = function registerRoute({ server, db }) {

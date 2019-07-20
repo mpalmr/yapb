@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import * as yup from 'yup';
 import { Formik } from 'formik';
 import {
   Container,
@@ -8,15 +7,12 @@ import {
   Button,
   Col,
 } from 'react-bootstrap';
+import { login as validationSchema } from '../validation-schemas';
 
 
 const formConfig = {
+  validationSchema,
   initialValues: { email: '', password: '' },
-
-  validationSchema: yup.object().shape({
-    email: yup.string().required().email(),
-    password: yup.string().required().min(6),
-  }),
 
   async onSubmit(values) {
     return axios

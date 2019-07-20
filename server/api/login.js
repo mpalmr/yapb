@@ -1,10 +1,22 @@
 'use strict';
 
 const argon2 = require('argon2');
-const createValidatorHandler = require('../middleware/create-validator-middleware');
-const validator = require('../../validation/registration');
+const { login: schema } = require('../../validation-schemas');
 
-const validate = createValidatorHandler(validator);
+
+async function validate(req, res, next) {
+  return schema
+    .validate(req.body)
+    .then((value) => {
+      next();
+      return value;
+    })
+    .catch((errors) => {
+      res
+        .status(400)
+        .json({ errors });
+    });
+}
 
 
 module.exports = function loginRoute({ server, db }) {
@@ -13,12 +25,13 @@ module.exports = function loginRoute({ server, db }) {
       .select('uuid', 'password')
       .where('email', '=', req.body.email)
       .first()
-      .then(user => user || {})
-      .then(async ({ uuid, password }) => {
-        if (await argon2.verify(password, req.body.password)) {
-          req.session.uid = uuid;
+      .then(async (user) => {
+        if (!user || !await argon2.verify(user.password, req.body.password)) {
+          res.sendStatus(401);
+        } else {
+          req.session.uid = user.uuid;
           res.sendStatus(200);
-        } else res.statusStatus(401);
+        }
       })
       .catch(next);
   }
