@@ -26,10 +26,15 @@ export default function Pastebin() {
     <Container>
       <Form method="post" action="/" onSubmit={handleSubmit} noValidate>
         {files.map(({ id, ...file }, i) => (
-          <File key={id} {...file} {...createFileHandlers(i)} />
+          <File
+            key={id}
+            {...file}
+            {...createFileHandlers(i)}
+            canRemove={files.length > 1}
+          />
         ))}
 
-        <Button onClick={addFile}>Add File</Button>
+        <Button className="add-file" onClick={addFile}>Add File</Button>
         <Button type="submit">Paste</Button>
       </Form>
     </Container>
