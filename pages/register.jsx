@@ -1,4 +1,5 @@
 import React from 'react';
+import Router from 'next/router';
 import { Formik } from 'formik';
 import {
   Container,
@@ -18,7 +19,7 @@ const formConfig = {
     return client
       .post('/register', values)
       .then((res) => {
-        console.log(res);
+        Router.push('/login');
         return res;
       });
   },

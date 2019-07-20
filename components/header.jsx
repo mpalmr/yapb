@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { UserContext } from './user-provider';
 
 
-export default function Header() {
+function Header() {
+  const { isLoggedIn } = useContext(UserContext);
+
   return (
     <Navbar className="justify-content-between" as="header" bg="dark" variant="dark">
       <Link href="/">
@@ -13,16 +16,33 @@ export default function Header() {
       </Link>
 
       <Nav>
-        <NavItem>
-          <Link href="/login">
-            <a>Login</a>
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link href="/register">
-            <a>Register</a>
-          </Link>
-        </NavItem>
+        {isLoggedIn ? (
+          <>
+            <NavItem>
+              <Link href="/">
+                <a>New</a>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link href="/logout">
+                <a>Logout</a>
+              </Link>
+            </NavItem>
+          </>
+        ) : (
+          <>
+            <NavItem>
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link href="/register">
+                <a>Register</a>
+              </Link>
+            </NavItem>
+          </>
+        )}
       </Nav>
 
       <style jsx global>
@@ -39,3 +59,6 @@ export default function Header() {
     </Navbar>
   );
 }
+
+
+export default Header;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import {
   Container,
@@ -6,30 +6,21 @@ import {
   Button,
   Col,
 } from 'react-bootstrap';
-import client from '../client';
+import { UserContext } from '../components/user-provider';
 import { login as validationSchema } from '../validation-schemas';
 
 
-const formConfig = {
-  validationSchema,
-  initialValues: { email: '', password: '' },
-
-  async onSubmit(values) {
-    return client
-      .post('/login', values)
-      .then((res) => {
-        console.log(res);
-        return res;
-      });
-  },
-};
-
-
 export default function LoginPage() {
+  const { login } = useContext(UserContext);
+
   return (
     <Container>
       <h2>Login</h2>
-      <Formik {...formConfig}>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={({ email, password }) => login(email, password)}
+      >
         {({
           values,
           errors,

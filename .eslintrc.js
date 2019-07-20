@@ -3,12 +3,14 @@
 module.exports = {
   root: true,
   extends: 'airbnb',
+  parser: 'babel-eslint',
   settings: {
     'import/core-modules': ['styled-jsx', 'styled-jsx/css'],
   },
   rules: {
     'no-console': 0,
     'prefer-destructuring': 0,
+    'react/destructuring-assignment': 0,
     'jsx-a11y/anchor-is-valid': [2, {
       components: ['Link'],
       specialLink: ['hrefLeft', 'hrefRight'],
@@ -29,6 +31,14 @@ module.exports = {
       rules: {
         strict: [2, 'global'],
       },
+    },
+    {
+      files: [
+        'components/**/*.jsx',
+        'pages/**/*.jsx',
+        'client.js',
+      ],
+      env: { browser: true },
     },
     {
       files: ['*.spec.js', '*.spec.jsx'],

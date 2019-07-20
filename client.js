@@ -1,4 +1,9 @@
 import axios from 'axios';
 
 
-export default axios.create({ baseURL: '/api' });
+const client = axios.create({ baseURL: '/api' });
+
+client.interceptors.response.use(res => res.data);
+
+
+export default client;
