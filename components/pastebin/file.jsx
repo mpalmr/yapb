@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 
-function PastebinFile({ contents, remove }) {
+function PastebinFile({ contents, remove, setContents }) {
   return (
     <div>
-      <input value={contents} />
+      <input value={contents} onChange={event => setContents(event.target.value)} />
       <Button variant="danger" onClick={remove}>
         Remove
       </Button>
@@ -18,6 +18,7 @@ function PastebinFile({ contents, remove }) {
 PastebinFile.propTypes = {
   contents: PropTypes.string.isRequired,
   remove: PropTypes.func.isRequired,
+  setContents: PropTypes.func.isRequired,
 };
 
 

@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import uuid from 'uuid/v4';
 
 
 function createFile() {
   return {
+    id: uuid(),
     contents: '',
   };
 }
@@ -18,8 +20,19 @@ export default function useFiles() {
       setFiles(files.concat(createFile()));
     },
 
-    removeFile(index) {
-      setFiles(files.filter((_, i) => i !== index));
+    createFileHandlers(fileIndex) {
+      return {
+        remove() {
+          setFiles(files.filter((_, i) => i !== fileIndex));
+        },
+
+        setContents(value) {
+          setFiles(files.map((file, i) => (i !== fileIndex ? file : {
+            ...file,
+            contents: value,
+          })));
+        },
+      };
     },
   };
 }

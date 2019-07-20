@@ -6,12 +6,15 @@ import File from './file';
 
 
 export default function Pastebin() {
-  const { files, addFile, removeFile } = useFiles();
+  const { files, addFile, createFileHandlers } = useFiles();
 
 
-  async function handleSubmit(values) {
+  async function handleSubmit(event) {
+    event.preventDefault();
+    console.log(files);
+
     return client
-      .post('/', values)
+      .post('/', files.map(({ id, ...file }) => file))
       .then((res) => {
         console.log(res);
         return res;
@@ -22,11 +25,8 @@ export default function Pastebin() {
   return (
     <Container>
       <Form method="post" action="/" onSubmit={handleSubmit} noValidate>
-        {files.map((file, i) => (
-          <File
-            {...file}
-            remove={() => removeFile(i)}
-          />
+        {files.map(({ id, ...file }, i) => (
+          <File key={id} {...file} {...createFileHandlers(i)} />
         ))}
 
         <Button onClick={addFile}>Add File</Button>
