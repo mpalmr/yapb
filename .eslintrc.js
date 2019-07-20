@@ -3,6 +3,7 @@
 module.exports = {
   root: true,
   extends: 'airbnb',
+  parser: 'babel-eslint',
   settings: {
     'import/core-modules': ['styled-jsx', 'styled-jsx/css'],
   },
@@ -29,6 +30,14 @@ module.exports = {
       rules: {
         strict: [2, 'global'],
       },
+    },
+    {
+      files: [
+        'components/**/*.jsx',
+        'pages/**/*.jsx',
+        'client.js',
+      ],
+      env: { browser: true },
     },
     {
       files: ['*.spec.js', '*.spec.jsx'],

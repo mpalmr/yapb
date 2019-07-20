@@ -18,7 +18,7 @@ const formConfig = {
     return client
       .post('/login', values)
       .then((res) => {
-        console.log(res);
+        localStorage.setItem('userEmail', values.email);
         return res;
       });
   },

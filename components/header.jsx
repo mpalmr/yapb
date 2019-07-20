@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 
-export default function Header() {
+function Header({ userEmail }) {
   return (
     <Navbar className="justify-content-between" as="header" bg="dark" variant="dark">
       <Link href="/">
@@ -13,16 +14,33 @@ export default function Header() {
       </Link>
 
       <Nav>
-        <NavItem>
-          <Link href="/login">
-            <a>Login</a>
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link href="/register">
-            <a>Register</a>
-          </Link>
-        </NavItem>
+        {userEmail ? (
+          <>
+            <NavItem>
+              <Link href="/">
+                <a>New</a>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link href="/logout">
+                <a>Logout</a>
+              </Link>
+            </NavItem>
+          </>
+        ) : (
+          <>
+            <NavItem>
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link href="/register">
+                <a>Register</a>
+              </Link>
+            </NavItem>
+          </>
+        )}
       </Nav>
 
       <style jsx global>
@@ -39,3 +57,15 @@ export default function Header() {
     </Navbar>
   );
 }
+
+
+Header.propTypes = {
+  userEmail: PropTypes.string,
+};
+
+Header.defaultProps = {
+  userEmail: null,
+};
+
+
+export default Header;
