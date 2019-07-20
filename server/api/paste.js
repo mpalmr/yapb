@@ -1,21 +1,10 @@
 'use strict';
 
+const createSchemaValidator = require('../middleware/create-schema-validator');
 const { paste: schema } = require('../../validation-schemas');
 
 
-async function validate(req, res, next) {
-  return schema
-    .validate(req.body)
-    .then((value) => {
-      next();
-      return value;
-    })
-    .catch((errors) => {
-      res
-        .status(400)
-        .json({ errors });
-    });
-}
+const validate = createSchemaValidator(schema);
 
 
 module.exports = function pasteRoute({ server, db }) {
