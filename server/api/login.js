@@ -8,7 +8,7 @@ const { login: schema } = require('../../validation-schemas');
 const validate = createSchemaValidator(schema);
 
 
-module.exports = function loginRoute({ server, db }) {
+module.exports = function loginRoute({ router, db }) {
   async function login(req, res, next) {
     return db('users')
       .select('uuid', 'password')
@@ -25,5 +25,5 @@ module.exports = function loginRoute({ server, db }) {
       .catch(next);
   }
 
-  server.post('/login', validate, login);
+  router.post('/login', validate, login);
 };

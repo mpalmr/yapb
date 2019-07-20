@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Formik } from 'formik';
 import {
   Container,
@@ -7,6 +6,7 @@ import {
   Button,
   Col,
 } from 'react-bootstrap';
+import client from '../client';
 import { login as validationSchema } from '../validation-schemas';
 
 
@@ -15,7 +15,7 @@ const formConfig = {
   initialValues: { email: '', password: '' },
 
   async onSubmit(values) {
-    return axios
+    return client
       .post('/login', values)
       .then((res) => {
         console.log(res);

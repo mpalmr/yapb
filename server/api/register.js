@@ -8,7 +8,7 @@ const { register: schema } = require('../../validation-schemas');
 const validate = createSchemaValidator(schema);
 
 
-module.exports = function registerRoute({ server, db }) {
+module.exports = function registerRoute({ router, db }) {
   async function createUser(req, res, next) {
     return argon2
       .hash(req.body.password)
@@ -25,5 +25,5 @@ module.exports = function registerRoute({ server, db }) {
         .catch(next));
   }
 
-  server.post('/register', validate, createUser);
+  router.post('/register', validate, createUser);
 };

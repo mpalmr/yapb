@@ -11,6 +11,5 @@ module.exports = function createSchemaValidator(schema) {
       res
         .status(400)
         .json({ errors });
-      return Promise.reject(errors);
     });
 };

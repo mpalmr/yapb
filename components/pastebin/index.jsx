@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { Formik } from 'formik';
 import { Container, Form, Button } from 'react-bootstrap';
+import client from '../../client';
 import { paste as validationSchema } from '../../validation-schemas';
 
 
@@ -10,7 +10,7 @@ const formConfig = {
   initialValues: { contents: '' },
 
   async onSubmit(values) {
-    return axios
+    return client
       .post('/', values)
       .then((res) => {
         console.log(res);
