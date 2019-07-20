@@ -3,6 +3,7 @@
 require('dotenv').config();
 const next = require('next');
 const express = require('express');
+const helmet = require('helmet');
 const session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
 const knex = require('knex');
@@ -22,6 +23,7 @@ app
   .then(() => {
     // Initialize Express and apply middleware
     const server = express();
+    server.use(helmet());
     server.use(express.json());
 
     server.use(session({
