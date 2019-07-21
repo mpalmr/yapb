@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Router from 'next/router';
 import { Formik } from 'formik';
 import {
@@ -8,29 +8,38 @@ import {
   Col,
 } from 'react-bootstrap';
 import client from '../client';
-import { register as validationSchema } from '../validation-schemas';
+import { register as schema } from '../validation-schemas';
 
 
-const formConfig = {
-  validationSchema,
-  initialValues: { email: '', password: '', githubUrl: '' },
+export default function RegisterPage() {
+  const [formError, setFormError] = useState(null);
 
-  async onSubmit(values) {
+
+  async function onSubmit(values, { setSubmitting }) {
     return client
       .post('/register', values)
       .then((res) => {
         Router.push('/login');
         return res;
+      })
+      .catch((error) => {
+        setFormError(error.response.data.displayError || 'Unknown error.');
+        return Promise.reject(error);
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
-  },
-};
+  }
 
 
-export default function RegisterPage() {
   return (
     <Container>
       <h2>Register</h2>
-      <Formik {...formConfig}>
+      <Formik
+        initialValues={{ email: '', password: '', githubUrl: '' }}
+        validationSchema={schema}
+        onSubmit={onSubmit}
+      >
         {({
           values,
           errors,
@@ -40,6 +49,8 @@ export default function RegisterPage() {
           handleSubmit,
         }) => (
           <Form method="post" action="/register" onSubmit={handleSubmit} noValidate>
+            {formError}
+
             <Form.Row>
 
               <Form.Group as={Col} md="6" controlId="email">
