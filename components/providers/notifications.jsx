@@ -42,7 +42,7 @@ function NotificationsProvider({ children }) {
         <Alert
           key={id}
           className={alertCss.className}
-          variant={alertVariants[type]}
+          variant={alertVariants[type] || type}
           onClose={() => dismiss(id)}
           dismissible
         >

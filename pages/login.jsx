@@ -6,7 +6,7 @@ import {
   Button,
   Col,
 } from 'react-bootstrap';
-import { UserContext } from '../components/user-provider';
+import { UserContext } from '../components/providers/user';
 import { login as validationSchema } from '../validation-schemas';
 
 

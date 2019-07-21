@@ -1,6 +1,7 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import { NotificationsContext } from './notifications';
 import client from '../../client';
 
 
@@ -8,6 +9,7 @@ export const UserContext = createContext();
 
 
 function UserProvider({ children, ...props }) {
+  const dispatchNotification = useContext(NotificationsContext);
   const [email, setEmail] = useState(props.email);
 
 
@@ -20,6 +22,7 @@ function UserProvider({ children, ...props }) {
         setEmail(loginEmail);
         localStorage.setItem('userEmail', loginEmail);
         Router.push('/');
+        dispatchNotification('success', 'Login successful!');
         return res;
       });
   }
