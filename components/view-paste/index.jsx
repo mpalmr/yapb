@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ViewPasteFile from './file';
+import Timestamps from '../timestamps';
 
 
 function ViewPaste({
@@ -13,14 +14,20 @@ function ViewPaste({
     <>
       <div>
         <p>
-          By: {creatorEmail}
+          By:&nbsp;
+          <a href={`mailto:${creatorEmail}`} rel="noopener noreferrer" target="_blank">
+            {creatorEmail}
+          </a>
         </p>
-        <dl>
+
+        {/* <dl>
           <dt>Created At:</dt>
           <dd>{createdAt.toLocaleString()}</dd>
           <dt>Modified At:</dt>
           <dd>{updatedAt.toLocaleString()}</dd>
-        </dl>
+        </dl> */}
+        <Timestamps createdAt={createdAt} updatedAt={updatedAt} />
+
       </div>
       {files.map(file => (
         <ViewPasteFile key={file.id} {...file} />

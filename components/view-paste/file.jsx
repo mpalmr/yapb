@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Timestamps from '../timestamps';
 
 
 function ViewPasteFile({
@@ -17,12 +18,7 @@ function ViewPasteFile({
 
       <div>
         <h3>{name}</h3>
-        <dl>
-          <dt>Created At:</dt>
-          <dd>{createdAt.toLocaleString()}</dd>
-          <dt>Modified At:</dt>
-          <dd>{updatedAt.toLocaleString()}</dd>
-        </dl>
+        <Timestamps createdAt={createdAt} updatedAt={updatedAt} />
       </div>
 
       <code>
