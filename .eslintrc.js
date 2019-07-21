@@ -11,6 +11,7 @@ module.exports = {
     'no-console': 0,
     'prefer-destructuring': 0,
     'react/destructuring-assignment': 0,
+    'react/jsx-one-expression-per-line': 0,
     'jsx-a11y/anchor-is-valid': [2, {
       components: ['Link'],
       specialLink: ['hrefLeft', 'hrefRight'],

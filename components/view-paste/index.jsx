@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ViewPasteFile from './file';
 
 
 function ViewPaste({ files }) {
-  console.log(files);
-  return (
-    <div />
-  );
+  return files.map(file => (
+    <ViewPasteFile key={file.id} {...file} />
+  ));
 }
 
 

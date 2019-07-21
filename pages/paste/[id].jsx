@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Container } from 'react-bootstrap';
 import client from '../../client';
 import ViewPaste from '../../components/view-paste';
 
@@ -12,7 +13,9 @@ function PasteIdPage({ files: rawFiles }) {
   }));
 
   return (
-    <ViewPaste files={files} />
+    <Container>
+      <ViewPaste files={files} />
+    </Container>
   );
 }
 

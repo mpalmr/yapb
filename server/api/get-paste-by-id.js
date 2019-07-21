@@ -2,7 +2,6 @@
 
 module.exports = function getPasteByIdRoute({ router, db }) {
   async function getPasteById(req, res, next) {
-    console.log(req);
     return db('pastes')
       .join('files', (join) => {
         join.on('files.paste_id', '=', 'pastes.id');
@@ -21,21 +20,12 @@ module.exports = function getPasteByIdRoute({ router, db }) {
         'users.email',
       )
       .where('pastes.uuid', '=', req.params.id)
-      .then(files => files.map(({
-        uuid,
-        email,
-        created_at,
-        updated_at,
-        ...file
-      }) => ({
+      .then(files => files.map(({ uuid, email, ...file }) => ({
         ...file,
         id: uuid,
         creatorEmail: email,
-        createdAt: created_at,
-        updatedAt: updated_at,
       })))
       .then((result) => {
-        console.log(result);
         res.json(result);
         return result;
       })
