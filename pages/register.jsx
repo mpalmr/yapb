@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Router from 'next/router';
 import { Formik } from 'formik';
 import {
@@ -7,30 +7,40 @@ import {
   Button,
   Col,
 } from 'react-bootstrap';
+import { NotificationsContext } from '../components/providers/notifications';
 import client from '../client';
-import { register as validationSchema } from '../validation-schemas';
+import { register as schema } from '../validation-schemas';
 
 
-const formConfig = {
-  validationSchema,
-  initialValues: { email: '', password: '', githubUrl: '' },
+export default function RegisterPage() {
+  const dispatchNotification = useContext(NotificationsContext);
 
-  async onSubmit(values) {
+
+  async function onSubmit(values, { setSubmitting }) {
     return client
       .post('/register', values)
       .then((res) => {
         Router.push('/login');
         return res;
+      })
+      .catch((error) => {
+        dispatchNotification('error', error.response.data.displayError || 'Unknown error.');
+        return Promise.reject(error);
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
-  },
-};
+  }
 
 
-export default function RegisterPage() {
   return (
     <Container>
       <h2>Register</h2>
-      <Formik {...formConfig}>
+      <Formik
+        initialValues={{ email: '', password: '', githubUrl: '' }}
+        validationSchema={schema}
+        onSubmit={onSubmit}
+      >
         {({
           values,
           errors,

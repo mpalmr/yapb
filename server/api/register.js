@@ -22,7 +22,13 @@ module.exports = function registerRoute({ router, db }) {
           res.json(result);
           return result;
         })
-        .catch(next));
+        .catch((error) => {
+          if (error.message.includes('users_email_unique')) {
+            res
+              .status(400)
+              .json({ displayError: 'Email already in use.' });
+          } else next(error);
+        }));
   }
 
   router.post('/register', validate, createUser);

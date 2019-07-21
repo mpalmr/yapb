@@ -6,12 +6,20 @@ import {
   Button,
   Col,
 } from 'react-bootstrap';
-import { UserContext } from '../components/user-provider';
+import { UserContext } from '../components/providers/user';
 import { login as validationSchema } from '../validation-schemas';
 
 
 export default function LoginPage() {
   const { login } = useContext(UserContext);
+
+
+  async function onSubmit(values, { setSubmitting }) {
+    return login(values.email, values.password).finally(() => {
+      setSubmitting(false);
+    });
+  }
+
 
   return (
     <Container>
@@ -19,7 +27,7 @@ export default function LoginPage() {
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={validationSchema}
-        onSubmit={({ email, password }) => login(email, password)}
+        onSubmit={onSubmit}
       >
         {({
           values,

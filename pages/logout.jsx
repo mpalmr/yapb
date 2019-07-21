@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import Router from 'next/router';
-import { UserContext } from '../components/user-provider';
+import { UserContext } from '../components/providers/user';
 
 
 export default function LogoutPage() {

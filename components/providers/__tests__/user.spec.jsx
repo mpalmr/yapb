@@ -1,11 +1,11 @@
 jest.mock('next/router', () => ({ push: jest.fn() }));
-jest.mock('../../client', () => ({ post: jest.fn() }));
+jest.mock('../../../client', () => ({ post: jest.fn() }));
 
 import React, { Fragment } from 'react';
 import { shallow } from 'enzyme';
 import Router from 'next/router';
-import UserProvider, { UserContext } from '../user-provider';
-import client from '../../client';
+import UserProvider, { UserContext } from '../user';
+import client from '../../../client';
 
 
 afterEach(() => {
