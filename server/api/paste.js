@@ -6,8 +6,8 @@ const { paste: schema } = require('../../validation-schemas');
 const validate = createSchemaValidator(schema);
 
 
-module.exports = function pasteRoute({ router, db }) {
-  async function paste(req, res, next) {
+module.exports = function createPasteRoute({ router, db }) {
+  async function createPaste(req, res, next) {
     let pasteId; // Need this for the response
 
     return db.transaction(async (trx) => {
@@ -32,5 +32,5 @@ module.exports = function pasteRoute({ router, db }) {
       .catch(next);
   }
 
-  router.post('/paste', validate, paste);
+  router.post('/paste', validate, createPaste);
 };
