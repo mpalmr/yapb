@@ -8,20 +8,26 @@ const validate = createSchemaValidator(schema);
 
 module.exports = function pasteRoute({ router, db }) {
   async function paste(req, res, next) {
-    return db.transaction(trx => trx('pastes')
-      .insert({ user_id: req.session.uid })
-      .returning(['id', 'uuid'])
-      .then(([pasteId, pasteUuid]) => Promise.all(req.body
+    let pasteId; // Need this for the response
+
+    return db.transaction(async (trx) => {
+      const [{ id, uuid }] = await trx('pastes')
+        .insert({ user_id: req.session.uid })
+        .returning(['id', 'uuid']);
+
+      pasteId = uuid;
+
+      return Promise.all(req.body
         .map(file => trx('files')
-          .insert({ ...file, paste_id: pasteId })))
+          .insert({ ...file, paste_id: id })))
         .then(trx.commit)
-        .catch(trx.rollback)
-        .then(() => pasteUuid)))
-      .then((pasteUuid) => {
+        .catch(trx.rollback);
+    })
+      .then((result) => {
         res
           .status(201)
-          .json({ pasteId: pasteUuid });
-        return pasteUuid;
+          .json({ pasteId });
+        return result;
       })
       .catch(next);
   }
