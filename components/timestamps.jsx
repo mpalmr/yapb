@@ -4,30 +4,40 @@ import PropTypes from 'prop-types';
 
 function Timestamps({ createdAt, updatedAt }) {
   return (
-    <div>
+    <div className="container">
       {createdAt && (
-        <p>
+        <p className="timestamp">
           <span>Created:</span> {createdAt.toLocaleString()}
         </p>
       )}
 
       {updatedAt && (
-        <p>
+        <p className="timestamp">
           <span>Updated:</span> {updatedAt.toLocaleString()}
         </p>
       )}
 
       <style jsx>
         {`
-          p {
-            margin-bottom: .25rem;
+          .container {
+            display: flex;
+            justify-content: flex-end;
           }
 
-          p:last-of-type {
+          .timestamp {
+            margin-bottom: 0;
+            font-size: .8rem;
+          }
+
+          .timestamp:last-of-type {
             margin-bottom: 0;
           }
 
-          span {
+          .timestamp:not(:last-of-type) {
+            margin-right: 1.25rem;
+          }
+
+          .timestamp span {
             font-weight: bold;
           }
         `}

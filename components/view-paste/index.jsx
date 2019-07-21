@@ -14,7 +14,7 @@ function ViewPaste({
     <>
       <div className="paste-header">
         {creatorEmail && (
-          <p>
+          <p className="creator">
             By:&nbsp;
             <a href={`mailto:${creatorEmail}`} rel="noopener noreferrer" target="_blank">
               {creatorEmail}
@@ -33,8 +33,11 @@ function ViewPaste({
         {`
           .paste-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+          }
+
+          .creator {
+            margin-bottom: 0;
           }
         `}
       </style>

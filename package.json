@@ -33,6 +33,7 @@
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.8.6",
     "react-simple-code-editor": "^0.9.14",
+    "react-syntax-highlighter": "^11.0.2",
     "uuid": "^3.3.2",
     "yup": "^0.27.0"
   },

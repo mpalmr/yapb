@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Timestamps from '../timestamps';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 
-function ViewPasteFile({
-  name,
-  contents,
-  createdAt,
-  updatedAt,
-}) {
+function getHighlightLanguage(fileName) {
+  const splitFileName = fileName.split('.');
+  const extension = splitFileName[splitFileName.length - 1];
+  return {
+    js: 'javascript',
+  }[extension] || null;
+}
+
+
+function ViewPasteFile({ name, contents }) {
   return (
     <div>
-      <div>
-        <h3>{name}</h3>
-        <Timestamps createdAt={createdAt} updatedAt={updatedAt} />
-      </div>
+      <h3>{name}</h3>
 
-      <code>
+      <SyntaxHighlighter language={getHighlightLanguage(name)} style={docco}>
         {contents}
-      </code>
+      </SyntaxHighlighter>
     </div>
   );
 }
@@ -27,8 +29,6 @@ function ViewPasteFile({
 ViewPasteFile.propTypes = {
   name: PropTypes.string,
   contents: PropTypes.string.isRequired,
-  createdAt: PropTypes.instanceOf(Date).isRequired,
-  updatedAt: PropTypes.instanceOf(Date).isRequired,
 };
 
 ViewPasteFile.defaultProps = {
