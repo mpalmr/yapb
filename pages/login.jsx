@@ -13,13 +13,21 @@ import { login as validationSchema } from '../validation-schemas';
 export default function LoginPage() {
   const { login } = useContext(UserContext);
 
+
+  async function onSubmit(values, { setSubmitting }) {
+    return login(values.email, values.password).finally(() => {
+      setSubmitting(false);
+    });
+  }
+
+
   return (
     <Container>
       <h2>Login</h2>
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={validationSchema}
-        onSubmit={({ email, password }) => login(email, password)}
+        onSubmit={onSubmit}
       >
         {({
           values,

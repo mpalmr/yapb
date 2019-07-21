@@ -24,6 +24,9 @@ function UserProvider({ children, ...props }) {
         Router.push('/');
         dispatchNotification('success', 'Login successful!');
         return res;
+      })
+      .catch(() => {
+        dispatchNotification('error', 'Authorization failed.');
       });
   }
 
