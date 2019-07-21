@@ -37,6 +37,7 @@ describe('login', () => {
   test('Successful login', async () => {
     client.post.mockReturnValue(Promise.resolve('OK'));
 
+
     const wrapper = shallow((
       <UserProvider>
         <Fragment />
