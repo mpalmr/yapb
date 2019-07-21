@@ -4,7 +4,6 @@ const argon2 = require('argon2');
 const createSchemaValidator = require('../middleware/create-schema-validator');
 const { register: schema } = require('../../validation-schemas');
 
-
 const validate = createSchemaValidator(schema);
 
 

@@ -21,7 +21,7 @@ export default function Pastebin() {
   async function handleSubmit(event) {
     event.preventDefault();
     return client
-      .post('/', files.map(({ id, ...file }) => file))
+      .post('/paste', files.map(({ id, ...file }) => file))
       .then((res) => {
         console.log(res);
         return res;

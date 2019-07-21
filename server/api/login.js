@@ -4,7 +4,6 @@ const argon2 = require('argon2');
 const createSchemaValidator = require('../middleware/create-schema-validator');
 const { login: schema } = require('../../validation-schemas');
 
-
 const validate = createSchemaValidator(schema);
 
 
@@ -18,7 +17,7 @@ module.exports = function loginRoute({ router, db }) {
         if (!user || !await argon2.verify(user.password, req.body.password)) {
           res.sendStatus(401);
         } else {
-          req.session.id = user.id;
+          req.session.uid = user.id;
           req.session.email = user.email;
           res.sendStatus(200);
         }

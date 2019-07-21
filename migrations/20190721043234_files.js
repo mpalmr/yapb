@@ -26,8 +26,10 @@ exports.up = async function up(knex) {
         .foreign('paste_id')
         .references('pastes.id');
 
+      table.string('name', 260);
+
       table
-        .string('name', 260)
+        .text('contents')
         .notNullable();
 
       table.timestamps(true, true);
