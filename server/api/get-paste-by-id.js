@@ -10,7 +10,7 @@ module.exports = function getPasteByIdRoute({ router, db }) {
         if (!paste) return res.sendStatus(404);
 
         const filesQuery = db('files')
-          .select('name', 'contents', 'created_at', 'updated_at')
+          .select('uuid', 'name', 'contents', 'created_at', 'updated_at')
           .where('paste_id', '=', paste.id);
 
         const creatorQuery = !paste.userId ? null : db('users')
@@ -20,10 +20,10 @@ module.exports = function getPasteByIdRoute({ router, db }) {
 
         return Promise.all([filesQuery, creatorQuery])
           .then(([files, creator]) => ({
-            files,
             creatorEmail: creator.email,
             createdAt: paste.createdAt,
             updatedAt: paste.updatedAt,
+            files: files.map(({ uuid, ...file }) => ({ ...file, id: uuid })),
           }))
           .then((fullPaste) => {
             res.json(fullPaste);

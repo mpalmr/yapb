@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 
 function ViewPasteFile({
-  id,
   name,
   contents,
   creatorEmail,
@@ -35,7 +34,6 @@ function ViewPasteFile({
 
 
 ViewPasteFile.propTypes = {
-  id: PropTypes.string.isRequired,
   name: PropTypes.string,
   contents: PropTypes.string.isRequired,
   creatorEmail: PropTypes.string,
