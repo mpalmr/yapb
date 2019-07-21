@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
-import client from '../client';
+import client from '../../client';
 
 
 export const UserContext = createContext();

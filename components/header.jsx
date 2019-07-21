@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import css from 'styled-jsx/css';
 import Link from 'next/link';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { UserContext } from './user-provider';
+import { UserContext } from './providers/user';
 
 
 const navbarCss = css.resolve`

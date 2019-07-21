@@ -2,7 +2,7 @@ import React from 'react';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UserProvider from '../components/user-provider';
+import UserProvider from '../components/providers/user';
 import Header from '../components/header';
 import Footer from '../components/footer';
 
