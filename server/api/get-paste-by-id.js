@@ -2,42 +2,33 @@
 
 module.exports = function getPasteByIdRoute({ router, db }) {
   async function getPasteById(req, res, next) {
-    console.log(req);
     return db('pastes')
-      .join('files', (join) => {
-        join.on('files.paste_id', '=', 'pastes.id');
-      })
-      .join('users', (join) => {
-        join.on('users.id', '=', 'pastes.user_id');
-      })
-      .select(
-        'pastes.created_at',
-        'pastes.updated_at',
-        'files.uuid',
-        'files.name',
-        'files.contents',
-        'files.created_at',
-        'files.updated_at',
-        'users.email',
-      )
-      .where('pastes.uuid', '=', req.params.id)
-      .then(files => files.map(({
-        uuid,
-        email,
-        created_at,
-        updated_at,
-        ...file
-      }) => ({
-        ...file,
-        id: uuid,
-        creatorEmail: email,
-        createdAt: created_at,
-        updatedAt: updated_at,
-      })))
-      .then((result) => {
-        console.log(result);
-        res.json(result);
-        return result;
+      .select('id', 'created_at', 'updated_at', 'user_id')
+      .where('uuid', '=', req.params.id)
+      .first()
+      .then((paste) => {
+        if (!paste) return res.sendStatus(404);
+
+        const filesQuery = db('files')
+          .select('uuid', 'name', 'contents', 'created_at', 'updated_at')
+          .where('paste_id', '=', paste.id);
+
+        const creatorQuery = !paste.userId ? null : db('users')
+          .select('email')
+          .where('id', '=', paste.userId)
+          .first();
+
+        return Promise.all([filesQuery, creatorQuery])
+          .then(([files, creator]) => ({
+            creatorEmail: creator ? creator.email : null,
+            createdAt: paste.createdAt,
+            updatedAt: paste.updatedAt,
+            files: files.map(({ uuid, ...file }) => ({ ...file, id: uuid })),
+          }))
+          .then((fullPaste) => {
+            res.json(fullPaste);
+            return fullPaste;
+          });
       })
       .catch(next);
   }
