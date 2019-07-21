@@ -1,55 +1,59 @@
 import React from 'react';
-import { Formik } from 'formik';
+import css from 'styled-jsx/css';
 import { Container, Form, Button } from 'react-bootstrap';
 import client from '../../client';
-import { paste as validationSchema } from '../../validation-schemas';
+import useFiles from './use-files';
+import File from './file';
 
 
-const formConfig = {
-  validationSchema,
-  initialValues: { contents: '' },
+const controlsCss = css.resolve`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`;
 
-  async onSubmit(values) {
+
+export default function Pastebin() {
+  const { files, addFile } = useFiles();
+
+
+  async function handleSubmit(event) {
+    event.preventDefault();
     return client
-      .post('/', values)
+      .post('/', files.map(({ id, ...file }) => file))
       .then((res) => {
         console.log(res);
         return res;
       });
-  },
-};
+  }
 
 
-export default function Pastebin() {
   return (
     <Container>
-      <Formik {...formConfig}>
-        {({
-          values,
-          errors,
-          touched,
-          isSubmitting,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <Form method="post" action="/" onSubmit={handleSubmit} noValidate>
+      <Form method="post" action="/" onSubmit={handleSubmit} noValidate>
+        {files.map(({ id, ...file }) => (
+          <File
+            key={id}
+            {...file}
+            canRemove={files.length > 1}
+          />
+        ))}
 
-            <Form.Group controlId="contents">
-              <Form.Control
-                type="text"
-                name="contents"
-                value={values.contents}
-                disabled={isSubmitting}
-                isValid={touched.contents && !errors.contents}
-                isInvalid={errors.contents}
-                onChange={handleChange}
-              />
-            </Form.Group>
+        <div className={controlsCss.className}>
+          <Button onClick={addFile}>Add File</Button>
+          <Button type="submit">Paste</Button>
+        </div>
+      </Form>
 
-            <Button type="submit">Paste</Button>
-          </Form>
-        )}
-      </Formik>
+      <style jsx global>
+        {`
+          .${controlsCss.className} button:not(:last-child) {
+            margin-right: .5rem;
+          }
+        `}
+      </style>
+      {controlsCss.styles}
     </Container>
   );
 }
