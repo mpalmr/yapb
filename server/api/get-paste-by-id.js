@@ -21,20 +21,19 @@ module.exports = function getPasteByIdRoute({ router, db }) {
         'users.email',
       )
       .where('pastes.uuid', '=', req.params.id)
-      .first()
-      .then(({
+      .then(files => files.map(({
         uuid,
         email,
         created_at,
         updated_at,
-        ...paste
+        ...file
       }) => ({
-        ...paste,
+        ...file,
         id: uuid,
         creatorEmail: email,
         createdAt: created_at,
         updatedAt: updated_at,
-      }))
+      })))
       .then((result) => {
         console.log(result);
         res.json(result);

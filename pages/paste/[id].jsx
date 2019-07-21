@@ -3,36 +3,38 @@ import PropTypes from 'prop-types';
 import client from '../../client';
 
 
-function PasteIdPage({ createdAt, updatedAt, ...rawProps }) {
-  const props = {
-    ...rawProps,
-    createdAt: new Date(createdAt),
-    updatedAt: new Date(updatedAt),
-  };
+function PasteIdPage({ files: rawFiles }) {
+  const files = rawFiles.map(file => ({
+    ...file,
+    createdAt: new Date(file.createdAt),
+    updatedAt: new Date(file.updatedAt),
+  }));
 
   return (
-    <p>Paste ID Page</p>
+    <div />
   );
 }
 
 
 PasteIdPage.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string,
-  contents: PropTypes.string.isRequired,
-  creatorEmail: PropTypes.string,
-  createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    contents: PropTypes.string.isRequired,
+    creatorEmail: PropTypes.string,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired,
+  })),
 };
 
 PasteIdPage.defaultProps = {
-  name: null,
-  creatorEmail: null,
+  files: [],
 };
 
 
 PasteIdPage.getInitialProps = async function getInitialProps({ query }) {
-  return client.get(`/paste/${query.id}`);
+  return client.get(`/paste/${query.id}`)
+    .then(files => ({ files }));
 };
 
 
