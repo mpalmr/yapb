@@ -20,7 +20,7 @@ module.exports = function getPasteByIdRoute({ router, db }) {
 
         return Promise.all([filesQuery, creatorQuery])
           .then(([files, creator]) => ({
-            creatorEmail: creator.email,
+            creatorEmail: creator ? creator.email : null,
             createdAt: paste.createdAt,
             updatedAt: paste.updatedAt,
             files: files.map(({ uuid, ...file }) => ({ ...file, id: uuid })),

@@ -12,20 +12,32 @@ function ViewPaste({
 }) {
   return (
     <>
-      <div>
-        <p>
-          By:&nbsp;
-          <a href={`mailto:${creatorEmail}`} rel="noopener noreferrer" target="_blank">
-            {creatorEmail}
-          </a>
-        </p>
+      <div className="paste-header">
+        {creatorEmail && (
+          <p>
+            By:&nbsp;
+            <a href={`mailto:${creatorEmail}`} rel="noopener noreferrer" target="_blank">
+              {creatorEmail}
+            </a>
+          </p>
+        )}
 
         <Timestamps createdAt={createdAt} updatedAt={updatedAt} />
-
       </div>
+
       {files.map(file => (
         <ViewPasteFile key={file.id} {...file} />
       ))}
+
+      <style jsx>
+        {`
+          .paste-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+        `}
+      </style>
     </>
   );
 }

@@ -1,42 +1,38 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 
 function Timestamps({ createdAt, updatedAt }) {
-  const times = [
-    { label: 'Created', value: createdAt },
-    { label: 'Updated', value: updatedAt },
-  ]
-    .filter(time => time.value);
-
-
   return (
-    <dl>
-      {times.map(time => (
-        <Fragment key={time.label}>
-          <dt>{time.label}:</dt>
-          <dd>{time.value.toLocaleString()}</dd>
-        </Fragment>
-      ))}
+    <div>
+      {createdAt && (
+        <p>
+          <span>Created:</span> {createdAt.toLocaleString()}
+        </p>
+      )}
+
+      {updatedAt && (
+        <p>
+          <span>Updated:</span> {updatedAt.toLocaleString()}
+        </p>
+      )}
 
       <style jsx>
         {`
-          dl {
-            display: flex;
-            flex-wrap: wrap;
+          p {
+            margin-bottom: .25rem;
           }
 
-          dl:empty {
-            display: none;
+          p:last-of-type {
+            margin-bottom: 0;
           }
 
-          dt,
-          dd {
-            width: 50%;
+          span {
+            font-weight: bold;
           }
         `}
       </style>
-    </dl>
+    </div>
   );
 }
 
