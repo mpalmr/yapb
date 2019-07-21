@@ -2,6 +2,7 @@ import React from 'react';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NotificationsProvider from '../components/providers/notifications';
 import UserProvider from '../components/providers/user';
 import Header from '../components/header';
 import Footer from '../components/footer';
@@ -27,12 +28,16 @@ export default class AppContainer extends App {
         <Head>
           <title>mpaste</title>
         </Head>
-        <UserProvider email={userEmail}>
-          <Header />
-          <main>
-            <Component {...pageProps} />
-          </main>
-        </UserProvider>
+
+        <NotificationsProvider>
+          <UserProvider email={userEmail}>
+            <Header />
+            <main>
+              <Component {...pageProps} />
+            </main>
+          </UserProvider>
+        </NotificationsProvider>
+
         <Footer />
       </Container>
     );

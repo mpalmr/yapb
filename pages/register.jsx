@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import Router from 'next/router';
 import { Formik } from 'formik';
 import {
@@ -7,12 +7,13 @@ import {
   Button,
   Col,
 } from 'react-bootstrap';
+import { NotificationsContext } from '../components/providers/notifications';
 import client from '../client';
 import { register as schema } from '../validation-schemas';
 
 
 export default function RegisterPage() {
-  const [formError, setFormError] = useState(null);
+  const dispatchNotification = useContext(NotificationsContext);
 
 
   async function onSubmit(values, { setSubmitting }) {
@@ -23,7 +24,7 @@ export default function RegisterPage() {
         return res;
       })
       .catch((error) => {
-        setFormError(error.response.data.displayError || 'Unknown error.');
+        dispatchNotification('error', error.response.data.displayError || 'Unknown error.');
         return Promise.reject(error);
       })
       .finally(() => {
@@ -49,8 +50,6 @@ export default function RegisterPage() {
           handleSubmit,
         }) => (
           <Form method="post" action="/register" onSubmit={handleSubmit} noValidate>
-            {formError}
-
             <Form.Row>
 
               <Form.Group as={Col} md="6" controlId="email">
