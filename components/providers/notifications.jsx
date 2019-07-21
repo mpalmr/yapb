@@ -21,24 +21,33 @@ function NotificationsProvider({ children }) {
   const [alerts, setAlerts] = useState([]);
 
 
+  function dismiss(id) {
+    setAlerts(alerts.filter(alert => alert.id !== id));
+  }
+
+
   function dispatchNotification(type, message, timeout = 12500) {
     const id = uuid();
-    setAlerts(alerts.concat({
-      id,
-      variant: alertVariants[type],
-      message,
-    }));
+    setAlerts(alerts.concat({ id, type, message }));
 
     setTimeout(() => {
-      setAlerts(alerts.filter(alert => alert.id !== id));
+      dismiss(id);
     }, timeout);
   }
 
 
   return (
     <NotificationsContext.Provider value={dispatchNotification}>
-      {alerts.map(({ id, variant, message }) => (
-        <Alert key={id} className={alertCss.className} variant={variant}>{message}</Alert>
+      {alerts.map(({ id, type, message }) => (
+        <Alert
+          key={id}
+          className={alertCss.className}
+          variant={alertVariants[type]}
+          onClose={() => dismiss(id)}
+          dismissible
+        >
+          {message}
+        </Alert>
       ))}
 
       {children}
