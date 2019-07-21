@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
-import { FaWindowClose } from 'react-icons/fa';
+import css from 'styled-jsx/css';
+import { Form, Button } from 'react-bootstrap';
 import SimpleCodeEditor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
+
+
+const removeCss = css.resolve`
+  margin-top: .5rem;
+`;
 
 
 function PastebinFile({
@@ -17,7 +22,7 @@ function PastebinFile({
   setContents,
 }) {
   return (
-    <div>
+    <div className="file">
       <Form.Group>
         <Form.Label>Filename</Form.Label>
         <Form.Control type="text" value={name} onChange={setName} />
@@ -36,38 +41,23 @@ function PastebinFile({
       />
 
       {canRemove && (
-        <button type="button" onClick={remove}>
-          <FaWindowClose />
-        </button>
+        <Button className={removeCss.className} variant="danger" onClick={remove}>
+          Remove
+        </Button>
       )}
 
       <style jsx>
         {`
-          div {
+          .file {
             position: relative;
           }
 
-          div:not(:first-child) {
+          .file:not(:first-child) {
             margin-top: 1em;
-          }
-
-          button {
-            position: absolute;
-            top: 0;
-            right: 4px;
-            opacity: .2;
-            transition: opacity .3s linear;
-            padding: 0;
-            border: 0;
-            background: transparent;
-            color: #f00;
-          }
-
-          button:hover {
-            opacity: 1;
           }
         `}
       </style>
+      {removeCss.styles}
     </div>
   );
 }

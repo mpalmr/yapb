@@ -1,21 +1,36 @@
 import React, { useContext } from 'react';
+import css from 'styled-jsx/css';
 import Link from 'next/link';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { UserContext } from './user-provider';
+
+
+const navbarCss = css.resolve`
+  justify-content: space-between;
+`;
+
+const navbarBrandCss = css.resolve`
+  margin-right: 0;
+  margin-bottom: 0;
+`;
+
+const navCss = css.resolve`
+  align-items: center;
+`;
 
 
 function Header() {
   const { isLoggedIn } = useContext(UserContext);
 
   return (
-    <Navbar className="justify-content-between" as="header" bg="dark" variant="dark">
+    <Navbar className={navbarCss.className} as="header" bg="dark" variant="dark">
       <Link href="/">
         <a>
-          <Navbar.Brand as="h1">mpaste</Navbar.Brand>
+          <Navbar.Brand className={navbarBrandCss.className} as="h1">mpaste</Navbar.Brand>
         </a>
       </Link>
 
-      <Nav>
+      <Nav className={navCss.className}>
         {isLoggedIn ? (
           <>
             <NavItem>
@@ -47,15 +62,14 @@ function Header() {
 
       <style jsx global>
         {`
-          header .nav-item {
-            padding: .5rem;
-          }
-
-          header .nav-item:last-child {
-            padding-right: 0;
+          .${navbarCss.className} .nav-item:not(:last-child) {
+            margin-right: .75rem;
           }
         `}
       </style>
+      {navbarCss.styles}
+      {navbarBrandCss.styles}
+      {navCss.styles}
     </Navbar>
   );
 }
