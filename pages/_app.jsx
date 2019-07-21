@@ -4,6 +4,7 @@ import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserProvider from '../components/user-provider';
 import Header from '../components/header';
+import Footer from '../components/footer';
 
 
 export default class AppContainer extends App {
@@ -28,8 +29,11 @@ export default class AppContainer extends App {
         </Head>
         <UserProvider email={userEmail}>
           <Header />
-          <Component {...pageProps} />
+          <main>
+            <Component {...pageProps} />
+          </main>
         </UserProvider>
+        <Footer />
       </Container>
     );
   }
