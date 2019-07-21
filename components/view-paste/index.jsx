@@ -20,12 +20,6 @@ function ViewPaste({
           </a>
         </p>
 
-        {/* <dl>
-          <dt>Created At:</dt>
-          <dd>{createdAt.toLocaleString()}</dd>
-          <dt>Modified At:</dt>
-          <dd>{updatedAt.toLocaleString()}</dd>
-        </dl> */}
         <Timestamps createdAt={createdAt} updatedAt={updatedAt} />
 
       </div>

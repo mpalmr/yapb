@@ -17,7 +17,7 @@ const alertVariants = {
 export const NotificationsContext = createContext();
 
 
-function NotificationsProvider({ children, value }) {
+function NotificationsProvider({ children }) {
   const [alerts, setAlerts] = useState([]);
 
 
@@ -37,7 +37,7 @@ function NotificationsProvider({ children, value }) {
 
 
   return (
-    <NotificationsContext.Provider value={value || dispatchNotification}>
+    <NotificationsContext.Provider value={dispatchNotification}>
       {alerts.map(({ id, type, message }) => (
         <Alert
           key={id}
@@ -60,11 +60,6 @@ function NotificationsProvider({ children, value }) {
 
 NotificationsProvider.propTypes = {
   children: PropTypes.node.isRequired,
-  value: PropTypes.func,
-};
-
-NotificationsProvider.defaultProps = {
-  value: null,
 };
 
 
