@@ -25,7 +25,11 @@ function PastebinFile({
     <div className="file">
       <Form.Group>
         <Form.Label>Filename</Form.Label>
-        <Form.Control type="text" value={name} onChange={setName} />
+        <Form.Control
+          type="text"
+          value={name}
+          onChange={event => setName(event.target.value)}
+        />
       </Form.Group>
 
       <SimpleCodeEditor
