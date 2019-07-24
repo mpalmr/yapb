@@ -49,7 +49,8 @@ PasteIdPage.defaultProps = {
 };
 
 
-PasteIdPage.getInitialProps = async function getInitialProps({ query }) {
+PasteIdPage.getInitialProps = async function getInitialProps({ query, res }) {
+  if (res) return res.locals.paste;
   return client.get(`/paste/${query.id}`);
 };
 
