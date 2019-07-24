@@ -8,11 +8,11 @@ const logoutRoute = require('./logout');
 const registerRoute = require('./register');
 
 
-module.exports = function api({ server, db }) {
+module.exports = function api({ server, ...routeDependencies }) {
   const router = express.Router();
   router.use(express.json());
 
-  const app = { router, db };
+  const app = { ...routeDependencies, router };
   pasteRoute(app);
   getPasteByIdRoute(app);
   loginRoute(app);

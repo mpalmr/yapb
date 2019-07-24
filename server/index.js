@@ -39,7 +39,7 @@ app
       },
     }));
 
-    // Apply API and page routes
+    // Apply routers
     api({ server, db });
     pages({ server, db, handle });
 

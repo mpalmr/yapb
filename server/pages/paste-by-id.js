@@ -3,7 +3,7 @@
 const getPasteById = require('../db/get-paste-by-id');
 
 
-module.exports = function pasteByIdPageRoute({ server, db, handle }) {
+module.exports = function pasteByIdPageRoute({ router, db }) {
   async function providePasteData(req, res, next) {
     return getPasteById(db, req.params.id)
       .then((paste) => {
@@ -16,5 +16,5 @@ module.exports = function pasteByIdPageRoute({ server, db, handle }) {
       });
   }
 
-  server.get('/paste/:id', providePasteData, handle);
+  router.get('/paste/:id', providePasteData);
 };
