@@ -9,6 +9,7 @@ const KnexSessionStore = require('connect-session-knex')(session);
 const knex = require('knex');
 const knexConfig = require('../knexfile');
 const api = require('./api');
+const pages = require('./pages');
 const errorMiddleware = require('./middleware/error');
 
 
@@ -38,8 +39,9 @@ app
       },
     }));
 
-    // Apply API routes
+    // Apply routers
     api({ server, db });
+    pages({ server, db, handle });
 
     // Default route handlers
     server.get('*', handle);

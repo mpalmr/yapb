@@ -3,12 +3,12 @@
 const getPasteById = require('../db/get-paste-by-id');
 
 
-module.exports = function getPasteByIdApiRoute({ router, db }) {
-  async function respond(req, res, next) {
+module.exports = function pasteByIdPageRoute({ router, db }) {
+  async function providePasteData(req, res, next) {
     return getPasteById(db, req.params.id)
       .then((paste) => {
-        res.json(paste);
-        return paste;
+        res.locals.paste = paste;
+        return next();
       })
       .catch((error) => {
         if (error.message === 'Paste not found.') res.sendStatus(404);
@@ -16,5 +16,5 @@ module.exports = function getPasteByIdApiRoute({ router, db }) {
       });
   }
 
-  router.get('/paste/:id', respond);
+  router.get('/paste/:id', providePasteData);
 };

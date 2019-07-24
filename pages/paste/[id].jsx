@@ -32,14 +32,14 @@ function PasteIdPage({
 
 PasteIdPage.propTypes = {
   creatorEmail: PropTypes.string,
-  createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired,
+  createdAt: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
+  updatedAt: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string,
     contents: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired,
+    createdAt: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
+    updatedAt: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
   })),
 };
 
@@ -49,7 +49,8 @@ PasteIdPage.defaultProps = {
 };
 
 
-PasteIdPage.getInitialProps = async function getInitialProps({ query }) {
+PasteIdPage.getInitialProps = async function getInitialProps({ query, res }) {
+  if (!process.browser) return res.locals.paste;
   return client.get(`/paste/${query.id}`);
 };
 
