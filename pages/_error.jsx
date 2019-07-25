@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-function ErrorPage({ message }) {
+function ErrorPage(props) {
   return (
     <>
       <h1>An error has occured</h1>
-      <p>{message}</p>
+      <p>{props.message}</p>
 
       <style jsx global>
         {`

@@ -21,7 +21,7 @@ export default class AppContainer extends App {
   }
 
   render() {
-    const { Component, userEmail, pageProps } = this.props;
+    const { Component, ...props } = this.props;
 
     return (
       <Container>
@@ -30,10 +30,10 @@ export default class AppContainer extends App {
         </Head>
 
         <NotificationsProvider>
-          <UserProvider email={userEmail}>
+          <UserProvider email={props.userEmail}>
             <Header />
             <main>
-              <Component {...pageProps} />
+              <Component {...props.pageProps} />
             </main>
           </UserProvider>
         </NotificationsProvider>

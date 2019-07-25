@@ -8,7 +8,7 @@ import client from '../../client';
 export const UserContext = createContext();
 
 
-function UserProvider({ children, ...props }) {
+function UserProvider(props) {
   const dispatchNotification = useContext(NotificationsContext);
   const [email, setEmail] = useState(props.email);
 
@@ -54,7 +54,7 @@ function UserProvider({ children, ...props }) {
         isLoggedIn: !!email,
       }}
     >
-      {children}
+      {props.children}
     </UserContext.Provider>
   );
 }

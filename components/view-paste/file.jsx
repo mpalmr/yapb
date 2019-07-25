@@ -13,13 +13,13 @@ function getHighlightLanguage(fileName) {
 }
 
 
-function ViewPasteFile({ name, contents }) {
+function ViewPasteFile(props) {
   return (
     <div>
-      <h3>{name}</h3>
+      <h3>{props.name}</h3>
 
-      <SyntaxHighlighter language={getHighlightLanguage(name)} style={docco}>
-        {contents}
+      <SyntaxHighlighter language={getHighlightLanguage(props.name)} style={docco}>
+        {props.contents}
       </SyntaxHighlighter>
     </div>
   );

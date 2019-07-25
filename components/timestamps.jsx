@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-function Timestamps({ createdAt, updatedAt }) {
+function Timestamps(props) {
   return (
     <div className="container">
-      {createdAt && (
+      {props.createdAt && (
         <p className="timestamp">
-          <span>Created:</span> {createdAt.toLocaleString()}
+          <span>Created:</span> {props.createdAt.toLocaleString()}
         </p>
       )}
 
-      {updatedAt && (
+      {props.updatedAt && (
         <p className="timestamp">
-          <span>Updated:</span> {updatedAt.toLocaleString()}
+          <span>Updated:</span> {props.updatedAt.toLocaleString()}
         </p>
       )}
 

@@ -13,30 +13,23 @@ const removeCss = css.resolve`
 `;
 
 
-function PastebinFile({
-  name,
-  contents,
-  canRemove,
-  remove,
-  setName,
-  setContents,
-}) {
+function PastebinFile(props) {
   return (
     <div className="file">
       <Form.Group>
         <Form.Label>Filename</Form.Label>
         <Form.Control
           type="text"
-          value={name}
-          onChange={event => setName(event.target.value)}
+          value={props.name}
+          onChange={event => props.setName(event.target.value)}
         />
       </Form.Group>
 
       <SimpleCodeEditor
-        value={contents}
+        value={props.contents}
         padding={10}
         highlight={code => highlight(code, languages.js)}
-        onValueChange={setContents}
+        onValueChange={props.setContents}
         style={{
           fontFamily: '"Fira code", "Fira Mono", monospace',
           fontSize: 14,
@@ -44,8 +37,8 @@ function PastebinFile({
         }}
       />
 
-      {canRemove && (
-        <Button className={removeCss.className} variant="danger" onClick={remove}>
+      {props.canRemove && (
+        <Button className={removeCss.className} variant="danger" onClick={props.remove}>
           Remove
         </Button>
       )}

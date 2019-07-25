@@ -4,28 +4,23 @@ import ViewPasteFile from './file';
 import Timestamps from '../timestamps';
 
 
-function ViewPaste({
-  creatorEmail,
-  createdAt,
-  updatedAt,
-  files,
-}) {
+function ViewPaste(props) {
   return (
     <>
       <div className="paste-header">
-        {creatorEmail && (
+        {props.creatorEmail && (
           <p className="creator">
             By:&nbsp;
-            <a href={`mailto:${creatorEmail}`} rel="noopener noreferrer" target="_blank">
-              {creatorEmail}
+            <a href={`mailto:${props.creatorEmail}`} rel="noopener noreferrer" target="_blank">
+              {props.creatorEmail}
             </a>
           </p>
         )}
 
-        <Timestamps createdAt={createdAt} updatedAt={updatedAt} />
+        <Timestamps createdAt={props.createdAt} updatedAt={props.updatedAt} />
       </div>
 
-      {files.map(file => (
+      {props.files.map(file => (
         <ViewPasteFile key={file.id} {...file} />
       ))}
 

@@ -17,7 +17,7 @@ const alertVariants = {
 export const NotificationsContext = createContext();
 
 
-function NotificationsProvider({ children }) {
+function NotificationsProvider(props) {
   const [alerts, setAlerts] = useState([]);
 
 
@@ -50,7 +50,7 @@ function NotificationsProvider({ children }) {
         </Alert>
       ))}
 
-      {children}
+      {props.children}
 
       {alertCss.styles}
     </NotificationsContext.Provider>

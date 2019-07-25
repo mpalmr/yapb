@@ -5,13 +5,8 @@ import client from '../../client';
 import ViewPaste from '../../components/view-paste';
 
 
-function PasteIdPage({
-  createdAt,
-  updatedAt,
-  files: rawFiles,
-  ...props
-}) {
-  const files = rawFiles.map(file => ({
+function PasteIdPage(props) {
+  const files = props.files.map(file => ({
     ...file,
     createdAt: new Date(file.createdAt),
     updatedAt: new Date(file.updatedAt),
@@ -22,8 +17,8 @@ function PasteIdPage({
       <ViewPaste
         {...props}
         files={files}
-        createdAt={new Date(createdAt)}
-        updatedAt={new Date(updatedAt)}
+        createdAt={new Date(props.createdAt)}
+        updatedAt={new Date(props.updatedAt)}
       />
     </Container>
   );
