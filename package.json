@@ -5,10 +5,10 @@
   "description": "A pastebin",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server",
+    "start": "NODE_ENV=production rm -rf .next && next build && node server",
     "dev": "NODE_ENV=development nodemon --inspect server/index.js -w server",
     "db:migrate": "knex migrate:latest",
-    "prepare": "docker-compose up && npm run db:migrate",
+    "prepare": "npm run db:migrate",
     "test": "NODE_ENV=test jest"
   },
   "author": "Matthe Palmer <mspalmer91@gmail.com>",
@@ -27,11 +27,11 @@
     "knex": "^0.19.1",
     "knex-stringcase": "^1.2.3",
     "next": "^9.0.2",
-    "pg": "^7.11.0",
+    "pg": "^7.12.0",
     "prismjs": "^1.17.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-bootstrap": "^1.0.0-beta.9",
+    "react-bootstrap": "^1.0.0-beta.10",
     "react-dom": "^16.8.6",
     "react-simple-code-editor": "^0.9.14",
     "react-syntax-highlighter": "^11.0.2",
@@ -51,6 +51,7 @@
     "jest": "^24.8.0",
     "jest-css-modules": "^2.1.0",
     "jest-localstorage-mock": "^2.4.0",
+    "next-progressbar": "^1.0.0",
     "nodemon": "^1.19.1",
     "webpack-merge": "^4.2.1"
   }
