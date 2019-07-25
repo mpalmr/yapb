@@ -14,13 +14,15 @@ function UserProvider(props) {
 
 
   async function login(loginEmail, password) {
-    if (email) throw new Error('User is already logged in.');
+    if (email) {
+      dispatchNotification('warning', 'User is already logged in.');
+      throw new Error('User is already logged in.');
+    }
 
     return client
       .post('/login', { password, email: loginEmail })
       .then((res) => {
         setEmail(loginEmail);
-        localStorage.setItem('userEmail', loginEmail);
         Router.push('/');
         dispatchNotification('success', 'Login successful!');
         return res;
@@ -32,9 +34,11 @@ function UserProvider(props) {
 
 
   async function logout() {
-    if (!email) throw new Error('User is not logged in.');
+    if (!email) {
+      dispatchNotification('warning', 'User is not logged in.');
+      throw new Error('User is not logged in.');
+    }
     setEmail(null);
-    localStorage.clear();
 
     return client
       .post('/logout')

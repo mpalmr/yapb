@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,14 +10,21 @@ import Footer from '../components/footer';
 
 
 export default class AppContainer extends App {
+  static propTypes = {
+    Component: PropTypes.element.isRequired,
+    userEmail: PropTypes.string,
+    pageProps: PropTypes.objectOf(PropTypes.any),
+  };
+
+  static defaultProps = {
+    userEmail: null,
+    pageProps: null,
+  };
+
   static async getInitialProps({ Component, ctx }) {
     return {
-      userEmail: process.browser
-        ? localStorage.getItem('userEmail')
-        : ctx.req.session.email,
-      pageProps: Component.getInitialProps
-        ? await Component.getInitialProps(ctx)
-        : null,
+      userEmail: process.browser ? null : ctx.req.session.email,
+      pageProps: Component.getInitialProps && await Component.getInitialProps(ctx),
     };
   }
 

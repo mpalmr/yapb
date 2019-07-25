@@ -9,6 +9,7 @@ function getHighlightLanguage(fileName) {
   const extension = splitFileName[splitFileName.length - 1];
   return {
     js: 'javascript',
+    rs: 'rust',
   }[extension] || null;
 }
 
