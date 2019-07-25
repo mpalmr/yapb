@@ -20,7 +20,7 @@ const navCss = css.resolve`
 
 
 function Header() {
-  const { isLoggedIn } = useContext(UserContext);
+  const { id, isLoggedIn } = useContext(UserContext);
 
   return (
     <Navbar className={navbarCss.className} as="header" bg="dark" variant="dark">
@@ -36,6 +36,11 @@ function Header() {
             <NavItem>
               <Link href="/">
                 <a>New</a>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link href={`/user/${id}`}>
+                <a>Profile</a>
               </Link>
             </NavItem>
             <NavItem>

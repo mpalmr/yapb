@@ -10,6 +10,7 @@ export const UserContext = createContext();
 
 function UserProvider({ children, ...props }) {
   const dispatchNotification = useContext(NotificationsContext);
+  const [id, setId] = useState(props.id);
   const [email, setEmail] = useState(props.email);
 
 
@@ -19,7 +20,9 @@ function UserProvider({ children, ...props }) {
     return client
       .post('/login', { password, email: loginEmail })
       .then((res) => {
+        setId(res.id);
         setEmail(loginEmail);
+        localStorage.setItem('userId', res.id);
         localStorage.setItem('userEmail', loginEmail);
         Router.push('/');
         dispatchNotification('success', 'Login successful!');
@@ -48,6 +51,7 @@ function UserProvider({ children, ...props }) {
   return (
     <UserContext.Provider
       value={{
+        id,
         email,
         login,
         logout,
@@ -62,10 +66,12 @@ function UserProvider({ children, ...props }) {
 
 UserProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  id: PropTypes.string,
   email: PropTypes.string,
 };
 
 UserProvider.defaultProps = {
+  id: null,
   email: null,
 };
 

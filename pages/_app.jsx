@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,19 +10,34 @@ import Footer from '../components/footer';
 
 
 export default class AppContainer extends App {
+  static propTypes = {
+    Component: PropTypes.func.isRequired,
+    userId: PropTypes.string,
+    userEmail: PropTypes.string,
+    pageProps: PropTypes.objectOf(PropTypes.any),
+  };
+
+  static defaultProps = {
+    userId: null,
+    userEmail: null,
+    pageProps: null,
+  };
+
   static async getInitialProps({ Component, ctx }) {
     return {
-      userEmail: process.browser
-        ? localStorage.getItem('userEmail')
-        : ctx.req.session.email,
-      pageProps: Component.getInitialProps
-        ? await Component.getInitialProps(ctx)
-        : null,
+      userId: process.browser ? localStorage.getItem('userId') : ctx.req.session.uuid,
+      userEmail: process.browser ? localStorage.getItem('userEmail') : ctx.req.session.email,
+      pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : null,
     };
   }
 
   render() {
-    const { Component, userEmail, pageProps } = this.props;
+    const {
+      Component,
+      userId,
+      userEmail,
+      pageProps,
+    } = this.props;
 
     return (
       <Container>
@@ -30,7 +46,7 @@ export default class AppContainer extends App {
         </Head>
 
         <NotificationsProvider>
-          <UserProvider email={userEmail}>
+          <UserProvider id={userId} email={userEmail}>
             <Header />
             <main>
               <Component {...pageProps} />

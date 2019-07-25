@@ -6,6 +6,7 @@ const getPasteByIdRoute = require('./get-paste-by-id');
 const loginRoute = require('./login');
 const logoutRoute = require('./logout');
 const registerRoute = require('./register');
+const getUserByIdRoute = require('./get-user-by-id');
 
 
 module.exports = function api({ server, ...routeDependencies }) {
@@ -18,6 +19,7 @@ module.exports = function api({ server, ...routeDependencies }) {
   loginRoute(app);
   logoutRoute(app);
   registerRoute(app);
+  getUserByIdRoute(app);
 
   server.use('/api', router);
 };

@@ -10,7 +10,7 @@ const validate = createSchemaValidator(schema);
 module.exports = function loginRoute({ router, db }) {
   async function login(req, res, next) {
     return db('users')
-      .select('id', 'email', 'password')
+      .select('id', 'uuid', 'email', 'password')
       .where('email', '=', req.body.email)
       .first()
       .then(async (user) => {
@@ -18,8 +18,9 @@ module.exports = function loginRoute({ router, db }) {
           res.sendStatus(401);
         } else {
           req.session.uid = user.id;
+          req.session.uuid = user.uuid;
           req.session.email = user.email;
-          res.sendStatus(200);
+          res.json({ id: user.uuid });
         }
       })
       .catch(next);
