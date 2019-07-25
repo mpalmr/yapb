@@ -37,7 +37,7 @@ const messages = {
 };
 
 ErrorPage.getInitialProps = function ({ res, err }) {
-  console.log(err);
+  console.error(err);
   const statusCode = process.browser ? null : res.statusCode;
   return {
     message: messages[statusCode],
