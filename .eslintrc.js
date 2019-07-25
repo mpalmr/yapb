@@ -51,6 +51,7 @@ module.exports = {
     },
     {
       files: [
+        'migrations/**/*.js',
         'next.config.js',
         'jest.config.js',
       ],
