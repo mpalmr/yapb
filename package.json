@@ -11,7 +11,7 @@
     "test": "NODE_ENV=test jest"
   },
   "author": "Matthe Palmer <mspalmer91@gmail.com>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "argon2": "^0.24.0",
