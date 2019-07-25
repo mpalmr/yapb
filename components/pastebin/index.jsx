@@ -16,7 +16,7 @@ const controlsCss = css.resolve`
 `;
 
 
-export default function Pastebin() {
+function Pastebin() {
   const dispatchNotification = useContext(NotificationsContext);
   const { files, addFile } = useFiles();
   const [submitting, setSubmitting] = useState(false);
@@ -71,3 +71,6 @@ export default function Pastebin() {
     </Container>
   );
 }
+
+
+export default Pastebin;
