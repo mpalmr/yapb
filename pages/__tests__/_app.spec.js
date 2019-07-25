@@ -2,11 +2,13 @@ import AppContainer from '../_app';
 
 
 describe('getInitialProps', () => {
-  const originalProcessBrowser = process.browser;
-
   afterEach(() => {
-    process.browser = originalProcessBrowser;
+    process.browser = undefined;
     jest.resetAllMocks();
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
   });
 
 
