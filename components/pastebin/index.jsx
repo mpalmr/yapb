@@ -18,7 +18,6 @@ const controlsCss = css.resolve`
 
 export default function Pastebin() {
   const dispatchNotification = useContext(NotificationsContext);
-  console.log(dispatchNotification);
   const { files, addFile } = useFiles();
   const [submitting, setSubmitting] = useState(false);
 
