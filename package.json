@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production rm -rf .next && next build && node server",
     "dev": "NODE_ENV=development nodemon --inspect server/index.js -w server",
     "db:migrate": "knex migrate:latest",
-    "prepare": "npm run db:migrate",
+    "prepare": "cp .env-example .env && npm run db:migrate",
     "test": "NODE_ENV=test jest"
   },
   "author": "Matthe Palmer <mspalmer91@gmail.com>",

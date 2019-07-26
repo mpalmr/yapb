@@ -11,7 +11,7 @@ import Footer from '../components/footer';
 
 export default class AppContainer extends App {
   static propTypes = {
-    Component: PropTypes.element.isRequired,
+    Component: PropTypes.func.isRequired,
     userEmail: PropTypes.string,
     pageProps: PropTypes.objectOf(PropTypes.any),
   };

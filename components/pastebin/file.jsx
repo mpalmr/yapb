@@ -28,7 +28,7 @@ function PastebinFile(props) {
       <SimpleCodeEditor
         value={props.contents}
         padding={10}
-        highlight={code => highlight(code, languages.js)}
+        highlight={contents => highlight(contents, languages.js)}
         onValueChange={props.setContents}
         style={{
           fontFamily: '"Fira code", "Fira Mono", monospace',

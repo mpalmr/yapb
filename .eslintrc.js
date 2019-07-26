@@ -24,6 +24,7 @@ module.exports = {
       files: [
         'server/**/*.js',
         'migrations/**/*.js',
+        'utils/**/*.js',
         'validation-schemas.js',
         'next.config.js',
         'knexfile.js',
