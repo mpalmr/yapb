@@ -8,6 +8,7 @@ const session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
 const knex = require('knex');
 const knexConfig = require('../knexfile');
+const endpoints = require('./endpoints');
 const api = require('./api');
 const pages = require('./pages');
 const errorMiddleware = require('./middleware/error');
@@ -40,8 +41,9 @@ app
     }));
 
     // Apply routers
-    api({ server, db });
-    pages({ server, db, handle });
+    endpoints({ server, db, handle });
+    // api({ server, db });
+    // pages({ server, db, handle });
 
     // Default route handlers
     server.get('*', handle);

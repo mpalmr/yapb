@@ -10,7 +10,6 @@ module.exports = function userPastesPageRoute({ router, db }) {
     getUserById(db, req.params.id),
   ])
     .then(([pastes, user]) => {
-      console.log(arguments);
       res.locals = {
         pastes,
         userId: user.id,
