@@ -12,7 +12,8 @@ module.exports = async function getPastesByUser(db, userId) {
       'files.updated_at as file_updated_at',
     )
     .innerJoin('files', 'pastes.id', '=', 'files.paste_id')
-    .where('pastes.user_id', '=', userId)
+    .innerJoin('users', 'pastes.user_id', '=', 'users.id')
+    .where('users.uuid', '=', userId)
     .then(records => Object.entries(records
       .reduce((acc, { pasteId, ...record }) => ({
         ...acc,
