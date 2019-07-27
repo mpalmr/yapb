@@ -3,7 +3,7 @@ import Router from 'next/router';
 import { UserContext } from '../components/providers/user';
 
 
-export default function LogoutPage() {
+function LogoutPage() {
   const { logout } = useContext(UserContext);
 
   useEffect(() => {
@@ -18,3 +18,6 @@ export default function LogoutPage() {
     <Fragment />
   );
 }
+
+
+export default LogoutPage;

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import App, { Container } from 'next/app';
-import Router from 'next/router';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NotificationsProvider from '../components/providers/notifications';

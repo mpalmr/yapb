@@ -10,7 +10,7 @@ import { UserContext } from '../components/providers/user';
 import { login as validationSchema } from '../validation-schemas';
 
 
-export default function LoginPage() {
+function LoginPage() {
   const { login } = useContext(UserContext);
 
 
@@ -81,3 +81,6 @@ export default function LoginPage() {
     </Container>
   );
 }
+
+
+export default LoginPage;

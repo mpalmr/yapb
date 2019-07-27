@@ -12,7 +12,7 @@ import client from '../client';
 import { register as schema } from '../validation-schemas';
 
 
-export default function RegisterPage() {
+function RegisterPage() {
   const dispatchNotification = useContext(NotificationsContext);
 
 
@@ -112,3 +112,6 @@ export default function RegisterPage() {
     </Container>
   );
 }
+
+
+export default RegisterPage;
