@@ -2,7 +2,7 @@ import ErrorPage from '../_error';
 
 
 beforeAll(() => {
-  jest.spyOn(console, 'error');
+  jest.spyOn(console, 'error').mockImplementation(() => {});
 });
 
 afterEach(() => {
