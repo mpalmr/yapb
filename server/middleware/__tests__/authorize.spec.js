@@ -1,34 +1,54 @@
 'use strict';
 
-const authorizeMiddleware = require('../authorize');
+const authorize = require('../authorize');
 
 
-const res = { redirect: jest.fn() };
+const res = {
+  sendStatus: jest.fn(),
+  redirect: jest.fn(),
+};
 const next = jest.fn();
 
 afterEach(() => {
+  res.sendStatus.mockReset();
   res.redirect.mockReset();
   next.mockReset();
 });
 
-afterAll(() => {
-  res.redirect.mockRestore();
-  next.mockRestore();
-});
 
-
-test('Redirects with a 401 status code when the user is not logged in', () => {
-  authorizeMiddleware({ session: {} }, res, next);
-  expect(res.redirect).toHaveBeenCalledWith(401, '/');
-  expect(next).not.toHaveBeenCalled();
-});
-
-
-test('Calls next if user is logged in', () => {
+test('Call next when user is logged in', () => {
   const req = {
     session: { uid: 'mockUid' },
   };
-  authorizeMiddleware(req, res, next);
-  expect(res.redirect).not.toHaveBeenCalled();
+  authorize(req, res, next);
+
   expect(next).toHaveBeenCalledWith();
+  expect(res.sendStatus).not.toHaveBeenCalled();
+  expect(res.redirect).not.toHaveBeenCalled();
+});
+
+
+test('Send 401 status code when route starts with /api/ and user is not logged in', () => {
+  const req = {
+    path: '/api/paste',
+    session: {},
+  };
+  authorize(req, res, next);
+
+  expect(next).not.toHaveBeenCalled();
+  expect(res.sendStatus).toHaveBeenCalledWith(401);
+  expect(res.redirect).not.toHaveBeenCalled();
+});
+
+
+test('Redirect if user is not logged in for all other cases', () => {
+  const req = {
+    path: '/login',
+    session: {},
+  };
+  authorize(req, res, next);
+
+  expect(next).not.toHaveBeenCalled();
+  expect(res.sendStatus).not.toHaveBeenCalled();
+  expect(res.redirect).toHaveBeenCalledWith('/');
 });

@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = function authorizeRoute(req, res, next) {
-  if (!req.session.uid) res.redirect(401, '/');
-  else next();
+module.exports = function authorizeMiddleware(req, res, next) {
+  if (req.session.uid) next();
+  else if (/^\/api\//.test(req.path)) res.sendStatus(401);
+  else res.redirect('/');
 };
