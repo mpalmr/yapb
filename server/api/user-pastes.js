@@ -10,7 +10,11 @@ module.exports = function userPastesApiRoute({ router, db }) {
     getUserById(db, req.params.id),
   ])
     .then(([pastes, user]) => {
-      res.json({ pastes, user });
+      res.json({
+        pastes,
+        userId: user.id,
+        userEmail: user.email,
+      });
     })
     .catch(next));
 };

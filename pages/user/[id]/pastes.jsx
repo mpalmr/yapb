@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { pasteProp } from '../../../prop-types';
 import client from '../../../client';
 
 
@@ -13,7 +14,9 @@ function UserPastes(props) {
 
 
 UserPastes.propTypes = {
-
+  userId: PropTypes.string.isRequired,
+  userEmail: PropTypes.string.isRequired,
+  pastes: PropTypes.arrayOf(pasteProp).isRequired,
 };
 
 

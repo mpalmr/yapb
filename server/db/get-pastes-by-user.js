@@ -14,22 +14,20 @@ module.exports = async function getPastesByUser(db, userId) {
     .innerJoin('files', 'pastes.id', '=', 'files.paste_id')
     .innerJoin('users', 'pastes.user_id', '=', 'users.id')
     .where('users.uuid', '=', userId)
-    .then(records => ({
-      pastes: Object.entries(records
-        .reduce((acc, { pasteId, ...record }) => ({
-          ...acc,
-          [pasteId]: {
-            id: pasteId,
-            createdAt: record.createdAt,
-            updatedAt: record.updatedAt,
-            files: ((acc[pasteId] || {}).files || []).concat({
-              id: record.fileId,
-              name: record.name,
-              contents: record.contents,
-              updatedAt: record.fileUpdatedAt,
-            }),
-          },
-        }), {}))
-        .map(([id, paste]) => ({ ...paste, id })),
-    }));
+    .then(records => Object.entries(records
+      .reduce((acc, { pasteId, ...record }) => ({
+        ...acc,
+        [pasteId]: {
+          id: pasteId,
+          createdAt: record.createdAt,
+          updatedAt: record.updatedAt,
+          files: ((acc[pasteId] || {}).files || []).concat({
+            id: record.fileId,
+            name: record.name,
+            contents: record.contents,
+            updatedAt: record.fileUpdatedAt,
+          }),
+        },
+      }), {}))
+      .map(([id, paste]) => ({ ...paste, id })));
 };
