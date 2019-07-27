@@ -39,6 +39,11 @@ function Header() {
               </Link>
             </NavItem>
             <NavItem>
+              <Link href="/paste">
+                <a>My Pastes</a>
+              </Link>
+            </NavItem>
+            <NavItem>
               <Link href="/logout">
                 <a>Logout</a>
               </Link>

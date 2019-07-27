@@ -1,11 +1,18 @@
 import React from 'react';
+import client from '../../client';
 
 
-function Pastes() {
+function CurrentUserPastes(props) {
+  console.log(props);
   return (
     <p>Pastes</p>
   );
 }
 
 
-export default Pastes;
+CurrentUserPastes.getInitialProps = async function ({ res }) {
+  return process.browser ? client.get('/paste') : { pastes: res.locals.pastes };
+};
+
+
+export default CurrentUserPastes;
