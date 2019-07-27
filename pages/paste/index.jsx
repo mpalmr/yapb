@@ -80,7 +80,7 @@ CurrentUserPastes.propTypes = {
 
 
 CurrentUserPastes.getInitialProps = async function ({ res }) {
-  return process.browser ? client.get('/paste') : { pastes: res.locals.pastes };
+  return process.browser ? client.get('/paste') : res.locals;
 };
 
 
