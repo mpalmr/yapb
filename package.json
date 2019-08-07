@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production rm -rf .next && next build && node server",
     "dev": "NODE_ENV=development nodemon --inspect server/index.js -w server",
     "db:migrate": "knex migrate:latest",
-    "prepare": "cp .env-example .env && npm run db:migrate",
+    "setup": "cp .env-example .env && npm run db:migrate",
     "test": "NODE_ENV=test jest"
   },
   "author": "Matthe Palmer <mspalmer91@gmail.com>",
@@ -25,7 +25,7 @@
     "formik": "^1.5.8",
     "helmet": "^3.20.0",
     "knex": "^0.19.1",
-    "knex-stringcase": "^1.2.3",
+    "knex-stringcase": "^1.2.4",
     "next": "^9.0.2",
     "pg": "^7.12.0",
     "prismjs": "^1.17.1",
@@ -39,7 +39,7 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.15",
+    "@types/jest": "^24.0.17",
     "babel-eslint": "^10.0.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
