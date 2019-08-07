@@ -1,11 +1,12 @@
 'use strict';
 
+const { authorizePage, authorizeApi } = require('../middleware/authorize');
 const sendLocals = require('../middleware/send-locals');
 const queryUserById = require('../db/user-by-id');
 const queryPastesByUser = require('../db/get-paste-by-id');
 
 
-module.exports = function userPastesEndpoint({ pageRouter, apiRouter, db }) {
+module.exports = function currentUserHome({ pageRouter, apiRouter, db }) {
   async function endpoint(req, res, next) {
     return Promise.all([
       queryPastesByUser(db, req.params.id),
@@ -23,7 +24,8 @@ module.exports = function userPastesEndpoint({ pageRouter, apiRouter, db }) {
       .catch(next);
   }
 
-  const path = '/user/:id/pastes';
-  pageRouter.get(path, endpoint);
-  apiRouter.get(path, endpoint, sendLocals);
+
+  const path = '/profile';
+  pageRouter.get(path, authorizePage, endpoint);
+  apiRouter.get(path, authorizeApi, endpoint, sendLocals);
 };

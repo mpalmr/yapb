@@ -9,8 +9,8 @@ const KnexSessionStore = require('connect-session-knex')(session);
 const knex = require('knex');
 const knexConfig = require('../knexfile');
 const endpoints = require('./endpoints');
-const api = require('./api');
-const pages = require('./pages');
+// const api = require('./api');
+// const pages = require('./pages');
 const errorMiddleware = require('./middleware/error');
 
 
