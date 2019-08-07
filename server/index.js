@@ -26,6 +26,26 @@ app
     const db = knex(knexConfig);
 
     server.use(helmet());
+    server.use(helmet.featurePolicy({
+      features: {
+        accelerometer: ['\'none\''],
+        ambientLightSensor: ['\'none\''],
+        autoplay: ['\'none\''],
+        camera: ['\'none\''],
+        encryptedMedia: ['\'none\''],
+        fullscreen: ['\'none\''],
+        geolocation: ['\'none\''],
+        gyroscope: ['\'none\''],
+        magnetometer: ['\'none\''],
+        microphone: ['\'none\''],
+        midi: ['\'none\''],
+        payment: ['\'none\''],
+        speaker: ['\'none\''],
+        syncXhr: ['\'none\''],
+        usb: ['\'none\''],
+        vr: ['\'none\''],
+      },
+    }));
 
     server.use(session({
       secret: process.env.SESSION_SECRET,
