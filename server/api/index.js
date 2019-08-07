@@ -8,6 +8,7 @@ const userPastesApiRoute = require('./user-pastes');
 const loginRoute = require('./login');
 const logoutRoute = require('./logout');
 const registerRoute = require('./register');
+const createUserToken = require('./create-user-token');
 
 
 module.exports = function api({ server, ...routeDependencies }) {
@@ -22,6 +23,7 @@ module.exports = function api({ server, ...routeDependencies }) {
   loginRoute(app);
   logoutRoute(app);
   registerRoute(app);
+  createUserToken(app);
 
   server.use('/api', router);
 };
