@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const randomBytes = promisify(crypto.randomBytes);
 
 
-module.exports = async function createToken(bytes = 64) {
-  return randomBytes(bytes).then(a => a.toString('hex'));
+module.exports = async function createToken(size = 64) {
+  const bytes = await randomBytes(size);
+  return bytes.toString('hex');
 };
